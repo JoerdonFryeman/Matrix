@@ -5,9 +5,14 @@ from matrix_for_windows import MatrixForWindows
 
 matrix_windows = MatrixForWindows()
 
-if __name__ == '__main__':
-    matrix_windows.title()
-    matrix_windows.fullscreen()
+
+def main() -> None:
+    matrix_windows.get_title()
+    matrix_windows.get_full_screen()
     sleep(0.1)
-    matrix_windows.matrixmove(-1, bext.height() - 2)
-    Thread(target=matrix_windows.breaker()).start()
+    matrix_windows.get_matrix_move(-1, bext.height() - 2)
+    Thread(target=matrix_windows.break_function()).start()
+
+
+if __name__ == '__main__':
+    main()

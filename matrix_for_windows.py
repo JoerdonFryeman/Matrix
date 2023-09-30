@@ -16,32 +16,40 @@ class MatrixForWindows:
     o = (' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ')
 
     locker = threading.Lock()
-    maincounter = 0
+    main_counter = 0
     stop = False
-    horizcoordcounter = 1  # counter and initial horizontal coordinate
-
-    '''Title'''
+    horizontal_coord_counter = 1  # counter and initial horizontal coordinate
 
     @staticmethod
-    def title():
+    def get_title() -> str:
+        """
+        Title
+        :return: str
+        """
         return bext.title("Matrix, version 1.0")
 
-    '''Full screen mode'''
-
     @staticmethod
-    def fullscreen():
+    def get_full_screen() -> object:
+        """
+        Full screen mode
+        :return: object
+        """
         return press_and_release('alt+enter')
 
-    '''Matrix switch'''
-
     @classmethod
-    def breaker(cls):
+    def break_function(cls) -> True:
+        """
+        Switch function
+        :return: bool
+        """
         input()
         cls.stop = True
 
-    '''Forming a random symbol from the map function'''
-
-    def matrixsymbol(self):
+    def get_matrix_symbol(self) -> str:
+        """
+        Forming a random symbol from the map function
+        :return: str
+        """
         f = (
             self.v[(randint(0, 9))],
             self.w[(randint(0, 9))],
@@ -52,35 +60,46 @@ class MatrixForWindows:
         )
         return f[randint(0, 5)]
 
-    '''The function forms a void'''
-
-    def matrixvoid(self):
+    def get_matrix_void(self) -> str:
+        """
+        Forming a void function
+        :return: str
+        """
         f = (self.o[(randint(0, 9))], self.o[(randint(0, 9))])
         return f[randint(0, 1)]
 
-    '''Drop shaping function'''
-
-    def matrixdrop(self, dropheight, horizcoord, coordofthedropbeginn):
+    def get_matrix_drop(self, drop_height, horizontal_coord, coord_of_the_drop_beginning) -> None:
+        """
+        Drop shaping function
+        :param drop_height: final drop coordinate
+        :param horizontal_coord: horizontal drop coordinate
+        :param coord_of_the_drop_beginning: drop beginning coordinate
+        :return: None
+        """
         while not self.stop:  # overall process cycle
             for b in range(6):  # drop life cycle
-                verticalcoordcounter = coordofthedropbeginn
-                self.maincounter += 1  # main cycle counter
-                for c in range(randint(0, dropheight)):  # random coordinate of the final drop height
-                    verticalcoordcounter += 1  # in each new cycle the drop height is multiplied by 1
+                vertical_coord_counter = coord_of_the_drop_beginning
+                self.main_counter += 1  # main cycle counter
+                for c in range(randint(0, drop_height)):  # random coordinate of the final drop height
+                    vertical_coord_counter += 1  # in each new cycle the drop height is multiplied by 1
                     with self.locker:
-                        bext.goto(horizcoord, verticalcoordcounter)  # coordinates of drop width and drop height
-                        if self.maincounter % 3 == 0:  # if the number of the main loop is divisible by 0
-                            print(f'{Fore.GREEN}{self.matrixvoid()}')  # a void is output
+                        bext.goto(horizontal_coord, vertical_coord_counter)  # coordinates of drop width and drop height
+                        if self.main_counter % 3 == 0:  # if the number of the main loop is divisible by 0
+                            print(f'{Fore.GREEN}{self.get_matrix_void()}')  # a void is output
                         else:
-                            print(f'{Fore.GREEN}{self.matrixsymbol()}')  # otherwise a droplet is generated
+                            print(f'{Fore.GREEN}{self.get_matrix_symbol()}')  # otherwise a droplet is generated
                     sleep(float(f'{0.0}{randint(3, 6)}'))
-            self.maincounter = 0
+            self.main_counter = 0
 
-    '''Shaping droplet streams function'''
-
-    def matrixmove(self, coordofthedropbeginn, dropheight):
+    def get_matrix_move(self, coord_of_the_drop_beginning, drop_height) -> None:
+        """
+        Shaping droplet streams function
+        :param coord_of_the_drop_beginning: drop beginning coordinate
+        :param drop_height: final drop coordinate
+        :return: None
+        """
         bext.hide()
         for q in range(bext.width() // 2):
-            Thread(target=MatrixForWindows().matrixdrop,
-                   args=(dropheight, self.horizcoordcounter, coordofthedropbeginn)).start()
-            self.horizcoordcounter += 2  # pitch between droplet streams
+            Thread(target=MatrixForWindows().get_matrix_drop,
+                   args=(drop_height, self.horizontal_coord_counter, coord_of_the_drop_beginning)).start()
+            self.horizontal_coord_counter += 2  # pitch between droplet streams

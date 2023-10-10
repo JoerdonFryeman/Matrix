@@ -37,7 +37,7 @@ class MatrixForWindows:
         return press_and_release('alt+enter')
 
     @classmethod
-    def break_function(cls) -> True:
+    def break_function(cls) -> None:
         """
         Switch function
         :return: bool

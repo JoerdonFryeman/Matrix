@@ -1,6 +1,7 @@
 from os import system
 from bext import goto
 from time import sleep
+from colorama import Fore
 from random import randint
 
 
@@ -32,7 +33,7 @@ class Neo:
             count += 1
             sleep(float(f'0.{randint(speed_first, speed_second)}'))
             goto(2, 1)
-            print(word[count - 1])
+            print(f'{Fore.GREEN}{word[count - 1]}')
 
         sleep(pause_first)
         goto(2, 1)
@@ -44,6 +45,6 @@ class Neo:
         self.generate_text(self.the_matrix, 4.2, 0.7, 2, 4)
         self.generate_text(self.follow, 4, 0.2, 1, 3)
         goto(2, 1)
-        print('Knock, knock, Neo.')
+        print(f'{Fore.GREEN}Knock, knock, Neo.')
         sleep(4.2)
         system('cls')

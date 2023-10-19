@@ -4,7 +4,6 @@ from time import sleep
 from colorama import Fore
 from random import randint
 from threading import Thread
-from keyboard import press_and_release
 
 
 class MatrixForWindows:
@@ -19,22 +18,6 @@ class MatrixForWindows:
     main_counter = 0
     stop = False
     horizontal_coord_counter = 1  # counter and initial horizontal coordinate
-
-    @staticmethod
-    def get_title() -> str:
-        """
-        Title
-        :return: str
-        """
-        return bext.title("Matrix, version 1.0")
-
-    @staticmethod
-    def get_full_screen() -> object:
-        """
-        Full screen mode
-        :return: object
-        """
-        return press_and_release('alt+enter')
 
     @classmethod
     def break_function(cls) -> None:

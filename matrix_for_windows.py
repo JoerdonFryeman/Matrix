@@ -1,9 +1,9 @@
-import bext
-import threading
 from time import sleep
 from colorama import Fore
 from random import randint
+from threading import Lock
 from threading import Thread
+from bext import goto, hide, width
 
 
 class MatrixForWindows:
@@ -14,7 +14,7 @@ class MatrixForWindows:
     z = ('Ё', 'У', 'р', 'Ф', 'q', 'ё', 'R', 'й', 'Ь', 'ю')
     o = (' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ')
 
-    locker = threading.Lock()
+    locker = Lock()
     main_counter = 0
     stop = False
     horizontal_coord_counter = 1  # counter and initial horizontal coordinate
@@ -66,7 +66,7 @@ class MatrixForWindows:
                 for c in range(randint(0, drop_height)):  # random coordinate of the final drop height
                     vertical_coord_counter += 1  # in each new cycle the drop height is multiplied by 1
                     with self.locker:
-                        bext.goto(horizontal_coord, vertical_coord_counter)  # coordinates of drop width and drop height
+                        goto(horizontal_coord, vertical_coord_counter)  # coordinates of drop width and drop height
                         if self.main_counter % 3 == 0:  # if the number of the main loop is divisible by 0
                             print(f'{Fore.GREEN}{self.get_matrix_void()}')  # a void is output
                         else:
@@ -81,8 +81,8 @@ class MatrixForWindows:
         :param drop_height: final drop coordinate
         :return: None
         """
-        bext.hide()
-        for q in range(bext.width() // 2):
+        hide()
+        for q in range(width() // 2):
             Thread(target=MatrixForWindows().get_matrix_drop,
                    args=(drop_height, self.horizontal_coord_counter, coord_of_the_drop_beginning)).start()
             self.horizontal_coord_counter += 2  # pitch between droplet streams

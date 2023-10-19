@@ -1,4 +1,5 @@
 from os import system
+from bext import goto
 from time import sleep
 from random import randint
 
@@ -30,9 +31,11 @@ class Neo:
         for i in range(len(word)):
             count += 1
             sleep(float(f'0.{randint(speed_first, speed_second)}'))
+            goto(2, 1)
             print(word[count - 1])
 
         sleep(pause_first)
+        goto(2, 1)
         print(24 * ' ')
         sleep(pause_second)
 
@@ -40,6 +43,7 @@ class Neo:
         self.generate_text(self.wake_up, 4.4, 1.2, 1, 2)
         self.generate_text(self.the_matrix, 4.2, 0.7, 2, 4)
         self.generate_text(self.follow, 4, 0.2, 1, 3)
+        goto(2, 1)
         print('Knock, knock, Neo.')
         sleep(4.2)
         system('cls')

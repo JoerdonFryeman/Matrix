@@ -14,15 +14,15 @@ def get_consistency() -> None:
     press_and_release('alt+enter')
     sleep(0.1)
     press('ctrl+shift')
-    for i in range(3):
+    for i in range(2):
         press_and_release('-')
     release('ctrl+shift')
     sleep(0.1)
+    hide()
 
 
 def main() -> None:
     """Entry point"""
-    hide()
     title("Matrix, version 1.1")
     get_consistency()
     neo.run_text()

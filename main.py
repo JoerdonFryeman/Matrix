@@ -2,11 +2,11 @@ from neo import Neo
 from time import sleep
 from threading import Thread
 from bext import title, height, hide
-from matrix_for_windows import MatrixForWindows
+from matrix import Matrix
 from keyboard import press, press_and_release, release
 
 neo = Neo()
-matrix_windows = MatrixForWindows()
+matrix_windows = Matrix()
 
 
 def get_consistency() -> None:

@@ -6,7 +6,7 @@ from threading import Thread
 from bext import goto, hide, width
 
 
-class MatrixForWindows:
+class Matrix:
     v = ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
     w = ('Ω', 'λ', 'β', 'γ', 'θ', 'π', 'Σ', 'Ψ', '¥', 'ω')
     x = ('@', '№', '#', '%', '&', '§', '?', '₽', '€', '$')
@@ -83,6 +83,6 @@ class MatrixForWindows:
         """
         hide()
         for q in range(width() // 2):
-            Thread(target=MatrixForWindows().get_matrix_drop,
+            Thread(target=Matrix().get_matrix_drop,
                    args=(drop_height, self.horizontal_coord_counter, coord_of_the_drop_beginning)).start()
             self.horizontal_coord_counter += 2  # pitch between droplet streams

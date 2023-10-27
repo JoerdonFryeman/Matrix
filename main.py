@@ -1,5 +1,6 @@
 from neo import Neo
 from time import sleep
+from random import randint
 from threading import Thread
 from bext import title, height, hide
 from matrix import Matrix
@@ -24,9 +25,9 @@ def get_consistency() -> None:
 def main() -> None:
     """Entry point"""
     title("Matrix, version 1.1")
-    get_consistency()
     neo.run_text()
-    matrix_windows.get_matrix_move(-1, height() - 2)
+    get_consistency()
+    matrix_windows.get_matrix_move(-1, height() - 2, float(f'{0.0}{randint(3, 6)}'))
     Thread(target=matrix_windows.break_function()).start()
 
 

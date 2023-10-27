@@ -3,7 +3,7 @@ from colorama import Fore
 from random import randint
 from threading import Lock
 from threading import Thread
-from bext import goto, hide, width
+from bext import goto, width
 
 
 class Matrix:
@@ -28,6 +28,10 @@ class Matrix:
         input()
         cls.stop = True
 
+    # @classmethod
+    # def run_function(cls):
+    #     cls.stop = False
+
     def get_matrix_symbol(self) -> str:
         """
         Forming a random symbol from the map function
@@ -51,9 +55,10 @@ class Matrix:
         f = (self.o[(randint(0, 9))], self.o[(randint(0, 9))])
         return f[randint(0, 1)]
 
-    def get_matrix_drop(self, drop_height, horizontal_coord, coord_of_the_drop_beginning) -> None:
+    def get_matrix_drop(self, drop_height, horizontal_coord, coord_of_the_drop_beginning, time_sleep) -> None:
         """
         Drop shaping function
+        :param time_sleep: float
         :param drop_height: final drop coordinate
         :param horizontal_coord: horizontal drop coordinate
         :param coord_of_the_drop_beginning: drop beginning coordinate
@@ -71,18 +76,18 @@ class Matrix:
                             print(f'{Fore.GREEN}{self.get_matrix_void()}')  # a void is output
                         else:
                             print(f'{Fore.GREEN}{self.get_matrix_symbol()}')  # otherwise a droplet is generated
-                    sleep(float(f'{0.0}{randint(3, 6)}'))
+                    sleep(time_sleep)
             self.main_counter = 0
 
-    def get_matrix_move(self, coord_of_the_drop_beginning, drop_height) -> None:
+    def get_matrix_move(self, coord_of_the_drop_beginning, drop_height, time_sleep) -> None:
         """
         Shaping droplet streams function
+        :param time_sleep: float
         :param coord_of_the_drop_beginning: drop beginning coordinate
         :param drop_height: final drop coordinate
         :return: None
         """
-        hide()
         for q in range(width() // 2):
             Thread(target=Matrix().get_matrix_drop,
-                   args=(drop_height, self.horizontal_coord_counter, coord_of_the_drop_beginning)).start()
+                   args=(drop_height, self.horizontal_coord_counter, coord_of_the_drop_beginning, time_sleep)).start()
             self.horizontal_coord_counter += 2  # pitch between droplet streams

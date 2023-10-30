@@ -16,7 +16,7 @@ class Matrix:
 
     locker = Lock()
     main_counter = 0
-    stop = False
+    switch = False
     horizontal_coord_counter = 1  # counter and initial horizontal coordinate
 
     @classmethod
@@ -26,11 +26,11 @@ class Matrix:
         :return: bool
         """
         input()
-        cls.stop = True
+        cls.switch = True
 
     # @classmethod
     # def run_function(cls):
-    #     cls.stop = False
+    #     cls.switch = False
 
     def get_matrix_symbol(self) -> str:
         """
@@ -64,7 +64,7 @@ class Matrix:
         :param coord_of_the_drop_beginning: drop beginning coordinate
         :return: None
         """
-        while not self.stop:  # overall process cycle
+        while not self.switch:  # overall process cycle
             for b in range(6):  # drop life cycle
                 vertical_coord_counter = coord_of_the_drop_beginning
                 self.main_counter += 1  # main cycle counter

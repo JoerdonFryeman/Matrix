@@ -7,7 +7,7 @@ from matrix import Matrix
 from keyboard import press, press_and_release, release
 
 neo = Neo()
-matrix_windows = Matrix()
+mx = Matrix()
 
 
 def get_consistency() -> None:
@@ -27,8 +27,8 @@ def main() -> None:
     title("Matrix, version 1.1")
     neo.run_text()
     get_consistency()
-    matrix_windows.get_matrix_move(-1, height() - 2, float(f'{0.0}{randint(3, 6)}'))
-    Thread(target=matrix_windows.break_function()).start()
+    mx.get_matrix_move(-1, height() - 2, float(f'{0.0}{randint(3, 6)}'))
+    Thread(target=mx.break_function).start()
 
 
 if __name__ == '__main__':

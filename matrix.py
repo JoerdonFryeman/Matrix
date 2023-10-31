@@ -88,6 +88,8 @@ class Matrix:
         :return: None
         """
         for q in range(width() // 2):
-            Thread(target=Matrix().get_matrix_drop,
-                   args=(drop_height, self.horizontal_coord_counter, coord_of_the_drop_beginning, time_sleep)).start()
+            drop = Matrix().get_matrix_drop
+            Thread(target=drop, args=(
+                drop_height, self.horizontal_coord_counter, coord_of_the_drop_beginning, time_sleep
+            )).start()
             self.horizontal_coord_counter += 2  # pitch between droplet streams

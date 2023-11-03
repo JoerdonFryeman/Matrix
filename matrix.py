@@ -21,15 +21,11 @@ class Matrix:
 
     @classmethod
     def break_function(cls) -> None:
-        """
-        Switch function
-        :return: bool
-        """
         input()
         cls.switch = True
 
     # @classmethod
-    # def run_function(cls):
+    # def run_function(cls) -> None:
     #     cls.switch = False
 
     def get_matrix_symbol(self) -> str:

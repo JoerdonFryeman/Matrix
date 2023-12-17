@@ -24,9 +24,9 @@ def get_consistency() -> None:
 
 def main() -> None:
     """Entry point"""
-    title("Matrix, version 1.1")
-    neo.run_text()
+    title("Matrix, version 1.2")
     get_consistency()
+    neo.run_text()
     mx.get_matrix_move(-1, height() - 2, float(f'{0.0}{randint(3, 6)}'))
     Thread(target=mx.break_function).start()
 

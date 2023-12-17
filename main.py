@@ -2,7 +2,7 @@ from neo import Neo
 from time import sleep
 from random import randint
 from threading import Thread
-from bext import title, height, hide
+from bext import title, height, hide_cursor
 from matrix import Matrix
 from keyboard import press, press_and_release, release
 
@@ -19,7 +19,7 @@ def get_consistency() -> None:
         press_and_release('-')
     release('ctrl+shift')
     sleep(0.1)
-    hide()
+    hide_cursor()
 
 
 def main() -> None:

@@ -26,7 +26,7 @@ def main() -> None:
     """Entry point"""
     title("Matrix, version 1.2")
     get_consistency()
-    neo.run_text()
+    neo.wake_up_neo(['Wake up, Neo...', 'The Matrix has you...', 'Follow the white rabbit.'])
     mx.get_matrix_move(-1, height() - 2, float(f'{0.0}{randint(3, 6)}'))
     Thread(target=mx.break_function).start()
 

@@ -1,91 +1,100 @@
 from time import sleep
-from colorama import Fore
-from random import randint
-from threading import Lock
-from threading import Thread
-from bext import goto, width
+from random import randint, choice
+from threading import Thread, Lock
+from curses import wrapper, curs_set, start_color, init_pair, COLOR_GREEN, COLOR_BLACK, color_pair, A_BOLD, error
 
 
 class Matrix:
-    v = ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
-    w = ('Ω', 'λ', 'β', 'γ', 'θ', 'π', 'Σ', 'Ψ', '¥', 'ω')
-    x = ('@', '№', '#', '%', '&', '§', '?', '₽', '€', '$')
-    y = ('j', 'S', 'X', 'Y', 'Z', 'W', 'd', 'x', 'y', 'z')
-    z = ('Ё', 'У', 'р', 'Ф', 'q', 'ё', 'R', 'й', 'Ь', 'ю')
-    o = (' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ')
+    def __init__(self):
+        self.locker = Lock()
+        self.init_height = 0
 
-    locker = Lock()
-    main_counter = 0
-    switch = False
-    horizontal_coord_counter = 1  # counter and initial horizontal coordinate
+    @staticmethod
+    def generate_symbol(*args: int | bool) -> str:
+        """
+        This function generates a random character from boolean lists
+        :param args: int | bool
+        """
+        symbol_list = [
+            *[' ' for _ in range(0, args[0])],
+            *[i for i in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9') if args[1]],
+            *[i for i in ('!', '@', '#', '%', '&', '§', '№', '~', '/', '?') if args[2]],
+            *[i for i in ('₿', '₽', '€', '$', '₩', 'ƒ', '¥', '₹', '₫', '£') if args[3]],
+            *[i for i in ('π', 'λ', 'β', 'γ', 'Ω', 'θ', 'Σ', 'Ψ', 'ξ', 'ω') if args[4]],
+            *[i for i in ('X', 'Y', 'Z', 'x', 'y', 'z', 'r', 'd', 'f', 'l') if args[5]],
+            *[i for i in ('Ё', 'ё', 'Э', 'э', 'Ф', 'ф', 'Ъ', 'ъ', 'Я', 'я') if args[6]],
+            *[i for i in ('小', '西', '体', '人', '里', '是', '永', '甲', '字', '书') if args[7]]
+        ]
+        if args[8]:
+            symbol_list.clear()
+            symbol_list.append(' ')
+        return choice(symbol_list[randint(0, len(symbol_list) - 1)])
 
-    @classmethod
-    def break_function(cls) -> None:
-        input()
-        cls.switch = True
+    @staticmethod
+    def get_color(current_height: int) -> object:
+        """
+        The function returns color of the random symbol
+        :param current_height: int
+        """
+        curs_set(False)
+        start_color()
+        init_pair(1, COLOR_GREEN, COLOR_BLACK)
+        green_on_black = color_pair(1)
+        if current_height % randint(3, 9) == 0:
+            return green_on_black | A_BOLD
+        return green_on_black
 
-    # @classmethod
-    # def run_function(cls) -> None:
-    #     cls.switch = False
+    def draw_symbol(self, stdscr, current_height: int, init_width: int, switch: int, *args: int | bool) -> object:
+        """
+        The function returns the random symbol on the screen
+        :param stdscr: initscr
+        :param current_height: int
+        :param init_width: int
+        :param switch: int
+        :param args: int | bool
+        """
+        if switch == 0:
+            return stdscr.addstr(current_height, init_width, ' ', self.get_color(current_height))
+        return stdscr.addstr(current_height, init_width, self.generate_symbol(*args), self.get_color(current_height))
 
-    def get_matrix_symbol(self) -> str:
+    def move_droplet_of_symbols(self, stdscr, current_height: int):
         """
-        Forming a random symbol from the map function
-        :return: str
+        The function moves the droplet of symbols down
+        :param stdscr: initscr
+        :param current_height: int
         """
-        f = (
-            self.v[(randint(0, 9))],
-            self.w[(randint(0, 9))],
-            self.x[(randint(0, 9))],
-            self.y[(randint(0, 9))],
-            self.z[(randint(0, 9))],
-            self.o[(randint(0, 9))]
-        )
-        return f[randint(0, 5)]
+        init_width = 1
+        switch = randint(0, 1)
+        min_speed, max_speed, step = 2, 8, 2
+        init_speed = float(f'{0}.{0}{randint(min_speed, max_speed)}')
+        while True:
+            max_height, max_width = stdscr.getmaxyx()
+            void_rate = 5
+            num, sym, cur, gre, lat, cyr, chi, clear = True, True, True, True, True, True, True, False
+            try:
+                with self.locker:
+                    stdscr.refresh()
+                    if current_height == randint(max_height // 3, max_height):
+                        raise error
+                    args = void_rate, num, sym, cur, gre, lat, cyr, chi, clear
+                    self.draw_symbol(stdscr, current_height, init_width, switch, *args)
+                    current_height += 1
+                sleep(init_speed)
+            except error:
+                if switch == 0:
+                    sleep(float(f'{0}.{0}{randint(min_speed, max_speed)}'))
+                current_height = self.init_height
+                init_width = choice([i for i in range(1, max_width - 1, 2)])
+                init_speed = float(f'{0}.{0}{randint(min_speed, max_speed)}')
 
-    def get_matrix_void(self) -> str:
-        """
-        Forming a void function
-        :return: str
-        """
-        f = (self.o[(randint(0, 9))], self.o[(randint(0, 9))])
-        return f[randint(0, 1)]
+    def make_threads_of_droplets(self):
+        """The function makes 73 threads of droplets"""
+        try:
+            for i in range(0, 73):  # self.max_width // 2
+                Thread(target=wrapper, args=(self.move_droplet_of_symbols, self.init_height)).start()
+        except error:
+            pass
 
-    def get_matrix_drop(self, drop_height, horizontal_coord, coord_of_the_drop_beginning, time_sleep) -> None:
-        """
-        Drop shaping function
-        :param time_sleep: float
-        :param drop_height: final drop coordinate
-        :param horizontal_coord: horizontal drop coordinate
-        :param coord_of_the_drop_beginning: drop beginning coordinate
-        :return: None
-        """
-        while not self.switch:  # overall process cycle
-            for b in range(6):  # drop life cycle
-                vertical_coord_counter = coord_of_the_drop_beginning
-                self.main_counter += 1  # main cycle counter
-                for c in range(randint(0, drop_height)):  # random coordinate of the final drop height
-                    vertical_coord_counter += 1  # in each new cycle the drop height is multiplied by 1
-                    with self.locker:
-                        goto(horizontal_coord, vertical_coord_counter)  # coordinates of drop width and drop height
-                        if self.main_counter % 3 == 0:  # if the number of the main loop is divisible by 0
-                            print(f'{Fore.GREEN}{self.get_matrix_void()}')  # a void is output
-                        else:
-                            print(f'{Fore.GREEN}{self.get_matrix_symbol()}')  # otherwise a droplet is generated
-                    sleep(time_sleep)
-            self.main_counter = 0
-
-    def get_matrix_move(self, coord_of_the_drop_beginning, drop_height, time_sleep) -> None:
-        """
-        Shaping droplet streams function
-        :param time_sleep: float
-        :param coord_of_the_drop_beginning: drop beginning coordinate
-        :param drop_height: final drop coordinate
-        :return: None
-        """
-        for q in range(width() // 2):
-            drop = Matrix().get_matrix_drop
-            Thread(target=drop, args=(
-                drop_height, self.horizontal_coord_counter, coord_of_the_drop_beginning, time_sleep
-            )).start()
-            self.horizontal_coord_counter += 2  # pitch between droplet streams
+# if __name__ == '__main__':
+#     matrix = Matrix()
+#     matrix.make_threads_of_droplets()

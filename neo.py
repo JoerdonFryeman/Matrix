@@ -1,29 +1,23 @@
-import os
 from time import sleep
 from random import randint
-from platform import system
-from colorama import Fore
+from curses import curs_set, init_pair, COLOR_GREEN, COLOR_BLACK, color_pair, wrapper
 
 
 class Neo:
     @staticmethod
-    def get_system_command() -> str:
-        system_name = system()
-        if system_name == 'Linux':
-            return 'clear'
-        elif system_name == 'Windows':
-            return 'cls'
-
-    def wake_up_neo(self, sentences_list: list):
+    def wake_up_neo(stdscr):
         """
         The function takes a list of words and return as a printed input
-        :param sentences_list: list
+        :param stdscr: initscr
         """
+        curs_set(False)
+        init_pair(1, COLOR_GREEN, COLOR_BLACK)
+        green_on_black = color_pair(1)
         counter_first = 0
-        for text in sentences_list:
+        for text in ('Wake up, Neo...', 'The Matrix has you...', 'Follow the white rabbit.'):
             counter_first += 1
             counter_second = 0
-            sentence = [i for i in str(text)]
+            sentence = [i for i in text]
             for i in range(len(sentence)):
                 counter_second += 1
                 if counter_first == 1:
@@ -34,10 +28,19 @@ class Neo:
                     sleep(float(f'0.{randint(1, 3)}'))
                 else:
                     sleep(float(f'0.{randint(randint(1, 2), randint(3, 4))}'))
-                os.system(self.get_system_command())
-                print(f'{Fore.GREEN}'.join(sentence[0:counter_second]))
+                stdscr.clear()
+                stdscr.addstr(2, 3, ''.join(sentence[0:counter_second]), green_on_black)
+                stdscr.refresh()
             sleep(float(4))
-        os.system(self.get_system_command())
-        print(f'{Fore.GREEN}Knock, knock, Neo.')
+        stdscr.clear()
+        stdscr.addstr(2, 3, 'Knock, knock, Neo.', green_on_black)
+        stdscr.refresh()
         sleep(4.2)
-        os.system(self.get_system_command())
+        stdscr.clear()
+
+    def get_neo_wrapper(self):
+        return wrapper(self.wake_up_neo)
+
+# if __name__ == '__main__':
+#     neo = Neo()
+#     neo.get_neo_wrapper()

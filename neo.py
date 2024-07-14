@@ -1,6 +1,6 @@
 from time import sleep
 from random import randint
-from curses import curs_set, init_pair, COLOR_GREEN, COLOR_BLACK, color_pair, wrapper
+from curses import init_pair, COLOR_GREEN, COLOR_BLACK, color_pair, wrapper
 
 
 class Neo:
@@ -10,7 +10,6 @@ class Neo:
         The function takes a list of words and return as a printed input
         :param stdscr: initscr
         """
-        curs_set(False)
         init_pair(1, COLOR_GREEN, COLOR_BLACK)
         green_on_black = color_pair(1)
         counter_first = 0

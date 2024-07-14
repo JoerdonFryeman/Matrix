@@ -1,13 +1,16 @@
 from time import sleep
 from random import randint, choice
 from threading import Thread, Lock
-from curses import wrapper, curs_set, start_color, init_pair, COLOR_GREEN, COLOR_BLACK, color_pair, A_BOLD, error
+from curses import (
+    noecho, cbreak, curs_set, start_color, init_pair, COLOR_GREEN, COLOR_BLACK, color_pair, A_BOLD, error, wrapper
+)
 
 
 class Matrix:
     def __init__(self):
-        self.locker = Lock()
         self.init_height = 0
+        self.threads_rate = 73
+        self.locker = Lock()
 
     @staticmethod
     def generate_symbol(*args: int | bool) -> str:
@@ -28,7 +31,7 @@ class Matrix:
         if args[8]:
             symbol_list.clear()
             symbol_list.append(' ')
-        return choice(symbol_list[randint(0, len(symbol_list) - 1)])
+        return choice(symbol_list)
 
     @staticmethod
     def get_color(current_height: int) -> object:
@@ -36,7 +39,6 @@ class Matrix:
         The function returns color of the random symbol
         :param current_height: int
         """
-        curs_set(False)
         start_color()
         init_pair(1, COLOR_GREEN, COLOR_BLACK)
         green_on_black = color_pair(1)
@@ -53,6 +55,9 @@ class Matrix:
         :param switch: int
         :param args: int | bool
         """
+        noecho()  # disabling the display of input characters
+        cbreak()  # disabling the character reading delay
+        curs_set(False)
         if switch == 0:
             return stdscr.addstr(current_height, init_width, ' ', self.get_color(current_height))
         return stdscr.addstr(current_height, init_width, self.generate_symbol(*args), self.get_color(current_height))
@@ -65,8 +70,8 @@ class Matrix:
         """
         init_width = 1
         switch = randint(0, 1)
-        min_speed, max_speed, step = 2, 8, 2
-        init_speed = float(f'{0}.{0}{randint(min_speed, max_speed)}')
+        min_speed, max_speed = 2, 8
+        init_speed = float(f'{0.}{randint(min_speed, max_speed)}')
         while True:
             max_height, max_width = stdscr.getmaxyx()
             void_rate = 5
@@ -78,19 +83,18 @@ class Matrix:
                         raise error
                     args = void_rate, num, sym, cur, gre, lat, cyr, chi, clear
                     self.draw_symbol(stdscr, current_height, init_width, switch, *args)
+                    stdscr.addstr(0, 0, '')
                     current_height += 1
                 sleep(init_speed)
             except error:
-                if switch == 0:
-                    sleep(float(f'{0}.{0}{randint(min_speed, max_speed)}'))
                 current_height = self.init_height
                 init_width = choice([i for i in range(1, max_width - 1, 2)])
-                init_speed = float(f'{0}.{0}{randint(min_speed, max_speed)}')
+                init_speed = float(f'{0.}{randint(min_speed, max_speed)}')
 
     def make_threads_of_droplets(self):
-        """The function makes 73 threads of droplets"""
+        """The function makes threads of droplets"""
         try:
-            for i in range(0, 73):  # self.max_width // 2
+            for i in range(0, self.threads_rate):
                 Thread(target=wrapper, args=(self.move_droplet_of_symbols, self.init_height)).start()
         except error:
             pass

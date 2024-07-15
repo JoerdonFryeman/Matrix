@@ -13,25 +13,22 @@ class Matrix:
         self.locker = Lock()
 
     @staticmethod
-    def generate_symbol(*args: int | bool) -> str:
+    def generate_symbol(*args: bool) -> str:
         """
         This function generates a random character from boolean lists
-        :param args: int | bool
+        :param args: bool
         """
         symbol_list = [
-            *[' ' for _ in range(0, args[0])],
-            *[i for i in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9') if args[1]],
-            *[i for i in ('!', '@', '#', '%', '&', '§', '№', '~', '/', '?') if args[2]],
-            *[i for i in ('₿', '₽', '€', '$', '₩', 'ƒ', '¥', '₹', '₫', '£') if args[3]],
-            *[i for i in ('π', 'λ', 'β', 'γ', 'Ω', 'θ', 'Σ', 'Ψ', 'ξ', 'ω') if args[4]],
-            *[i for i in ('X', 'Y', 'Z', 'x', 'y', 'z', 'r', 'd', 'f', 'l') if args[5]],
-            *[i for i in ('Ё', 'ё', 'Э', 'э', 'Ф', 'ф', 'Ъ', 'ъ', 'Я', 'я') if args[6]],
-            *[i for i in ('小', '西', '体', '人', '里', '是', '永', '甲', '字', '书') if args[7]]
+            lambda: (' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ') if args[0] else False,
+            lambda: ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9') if args[1] else False,
+            lambda: ('!', '@', '#', '%', '&', '§', '№', '~', '/', '?') if args[2] else False,
+            lambda: ('₿', '₽', '€', '$', '₩', 'ƒ', '¥', '₹', '₫', '£') if args[3] else False,
+            lambda: ('π', 'λ', 'β', 'γ', 'Ω', 'θ', 'Σ', 'Ψ', 'ξ', 'ω') if args[4] else False,
+            lambda: ('X', 'Y', 'Z', 'x', 'y', 'z', 'r', 'd', 'f', 'l') if args[5] else False,
+            lambda: ('Ё', 'ё', 'Э', 'э', 'Ф', 'ф', 'Ъ', 'ъ', 'Я', 'я') if args[6] else False,
+            lambda: ('小', '西', '体', '人', '里', '是', '永', '甲', '字', '书') if args[7] else False
         ]
-        if args[8]:
-            symbol_list.clear()
-            symbol_list.append(' ')
-        return choice(symbol_list)
+        return choice(symbol_list[randint(0, randint(0, len(symbol_list) - 1))]())
 
     @staticmethod
     def get_color(current_height: int) -> object:
@@ -46,14 +43,14 @@ class Matrix:
             return green_on_black | A_BOLD
         return green_on_black
 
-    def draw_symbol(self, stdscr, current_height: int, init_width: int, switch: int, *args: int | bool) -> object:
+    def draw_symbol(self, stdscr, current_height: int, init_width: int, switch: int, *args: bool) -> object:
         """
         The function returns the random symbol on the screen
         :param stdscr: initscr
         :param current_height: int
         :param init_width: int
         :param switch: int
-        :param args: int | bool
+        :param args: bool
         """
         noecho()  # disabling the display of input characters
         cbreak()  # disabling the character reading delay
@@ -74,15 +71,15 @@ class Matrix:
         init_speed = float(f'{0.}{randint(min_speed, max_speed)}')
         while True:
             max_height, max_width = stdscr.getmaxyx()
-            void_rate = 5
-            num, sym, cur, gre, lat, cyr, chi, clear = True, True, True, True, True, True, True, False
+            void, num, sym, cur, gre, lat, cyr, chi = True, True, True, True, True, True, True, True
             try:
                 with self.locker:
                     stdscr.refresh()
                     if current_height == randint(max_height // 3, max_height):
                         raise error
-                    args = void_rate, num, sym, cur, gre, lat, cyr, chi, clear
-                    self.draw_symbol(stdscr, current_height, init_width, switch, *args)
+                    self.draw_symbol(
+                        stdscr, current_height, init_width, switch, void, num, sym, cur, gre, lat, cyr, chi
+                    )
                     stdscr.addstr(0, 0, '')
                     current_height += 1
                 sleep(init_speed)

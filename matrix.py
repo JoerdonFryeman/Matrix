@@ -19,14 +19,13 @@ class Matrix:
         :param args: bool
         """
         symbol_list = [
-            lambda: (' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ') if args[0] else False,
-            lambda: ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9') if args[1] else False,
-            lambda: ('!', '@', '#', '%', '&', '§', '№', '~', '/', '?') if args[2] else False,
-            lambda: ('₿', '₽', '€', '$', '₩', 'ƒ', '¥', '₹', '₫', '£') if args[3] else False,
-            lambda: ('π', 'λ', 'β', 'γ', 'Ω', 'θ', 'Σ', 'Ψ', 'ξ', 'ω') if args[4] else False,
-            lambda: ('X', 'Y', 'Z', 'x', 'y', 'z', 'r', 'd', 'f', 'l') if args[5] else False,
-            lambda: ('Ё', 'ё', 'Э', 'э', 'Ф', 'ф', 'Ъ', 'ъ', 'Я', 'я') if args[6] else False,
-            lambda: ('小', '西', '体', '人', '里', '是', '永', '甲', '字', '书') if args[7] else False
+            lambda: ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9') if args[0] else False,
+            lambda: ('!', '@', '#', '%', '&', '§', '№', '~', '/', '?') if args[1] else False,
+            lambda: ('₿', '₽', '€', '$', '₩', 'ƒ', '¥', '₹', '₫', '£') if args[2] else False,
+            lambda: ('π', 'λ', 'β', 'γ', 'Ω', 'θ', 'Σ', 'Ψ', 'ξ', 'ω') if args[3] else False,
+            lambda: ('X', 'Y', 'Z', 'x', 'y', 'z', 'r', 'd', 'f', 'l') if args[4] else False,
+            lambda: ('Ё', 'ё', 'Э', 'э', 'Ф', 'ф', 'Ъ', 'ъ', 'Я', 'я') if args[5] else False,
+            lambda: ('小', '西', '体', '人', '里', '是', '永', '甲', '字', '书') if args[6] else False
         ]
         return choice(symbol_list[randint(0, randint(0, len(symbol_list) - 1))]())
 
@@ -56,7 +55,7 @@ class Matrix:
         cbreak()  # disabling the character reading delay
         curs_set(False)
         if switch == 0:
-            return stdscr.addstr(current_height, init_width, ' ', self.get_color(current_height))
+            return stdscr.addstr(current_height, init_width, ' ')
         return stdscr.addstr(current_height, init_width, self.generate_symbol(*args), self.get_color(current_height))
 
     def move_droplet_of_symbols(self, stdscr, current_height: int):
@@ -68,17 +67,19 @@ class Matrix:
         init_width = 1
         switch = randint(0, 1)
         min_speed, max_speed = 2, 8
+        void_rate = 3
         init_speed = float(f'{0.}{randint(min_speed, max_speed)}')
         while True:
             max_height, max_width = stdscr.getmaxyx()
-            void, num, sym, cur, gre, lat, cyr, chi = True, True, True, True, True, True, True, True
+            num, sym, cur, gre, lat, cyr, chi = True, True, True, True, True, True, True
             try:
                 with self.locker:
                     stdscr.refresh()
                     if current_height == randint(max_height // 3, max_height):
                         raise error
+                    stdscr.addstr(current_height, init_width, ' ' * randint(0, void_rate))
                     self.draw_symbol(
-                        stdscr, current_height, init_width, switch, void, num, sym, cur, gre, lat, cyr, chi
+                        stdscr, current_height, init_width, switch, num, sym, cur, gre, lat, cyr, chi
                     )
                     stdscr.addstr(0, 0, '')
                     current_height += 1

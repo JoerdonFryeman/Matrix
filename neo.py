@@ -1,6 +1,10 @@
 from time import sleep
 from random import randint
-from curses import init_pair, COLOR_GREEN, COLOR_BLACK, color_pair, wrapper
+
+try:
+    from curses import init_pair, COLOR_GREEN, COLOR_BLACK, color_pair, wrapper
+except ModuleNotFoundError:
+    print('To use the neo.py module, you must create a virtual environment and install the requirements.txt file!')
 
 
 class Neo:

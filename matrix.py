@@ -1,12 +1,18 @@
 from time import sleep
 from random import randint, choice
 from threading import Thread, Lock
-from curses import (
-    noecho, cbreak, curs_set, start_color, init_pair, COLOR_GREEN, COLOR_BLACK, color_pair, A_BOLD, error, wrapper
-)
+
+try:
+    from curses import (
+        noecho, cbreak, curs_set, start_color, init_pair, COLOR_GREEN, COLOR_BLACK, color_pair, A_BOLD, error, wrapper
+    )
+except ModuleNotFoundError:
+    print('To use the matrix.py module, you must create a virtual environment and install the requirements.txt file!')
 
 
 class Matrix:
+    __slots__ = ('init_height', 'threads_rate', 'locker')
+
     def __init__(self):
         self.init_height = 0
         self.threads_rate = 73

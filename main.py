@@ -1,6 +1,5 @@
-from neo import Neo
-from matrix import Matrix
 from platform import system
+from matrix import Neo, Matrix
 
 neo = Neo()
 matrix = Matrix()
@@ -26,8 +25,11 @@ def verify_os_for_requirements():
 def main():
     """Entry point"""
     if verify_os_for_requirements():
-        neo.get_neo_wrapper()
-        matrix.make_threads_of_droplets()
+        try:
+            neo.get_neo_wrapper()
+            matrix.make_threads_of_droplets()
+        except NameError:
+            print('You must install the requirements.txt file!')
 
 
 if __name__ == '__main__':

@@ -9,9 +9,17 @@ cd Matrix
 python3 main.py
 ```
 ## For Windows
+First, create and activate a virtual environment
 ``` code
-virtualenv --python C:\Path\To\Python\python.exe windows_venv
+python -m venv venv
 venv\Scripts\activate
+```
+Secondly, run the script to create requirements.txt
+``` code
+python main.py
+```
+Finally, install the requirements and run script
+``` code
 pip install -r requirements.txt
 python main.py
 ```

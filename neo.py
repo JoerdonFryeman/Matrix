@@ -18,14 +18,12 @@ class Neo(Configuration):
             sentence = [i for i in text]
             for i in range(len(sentence)):
                 _counter_second += 1
-                if _counter_first == 1:
-                    sleep(float(f'0.{randint(1, 3)}'))
-                elif _counter_first == 2:
-                    sleep(float(f'0.{randint(2, 4)}'))
-                elif _counter_first == 3:
-                    sleep(float(f'0.{randint(1, 3)}'))
-                else:
-                    sleep(float(f'0.{randint(randint(1, 2), randint(3, 4))}'))
+                dictionary = {
+                    1: lambda: sleep(float(f'0.{randint(1, 3)}')),
+                    2: lambda: sleep(float(f'0.{randint(2, 4)}')),
+                    3: lambda: sleep(float(f'0.{randint(1, 3)}'))
+                }[_counter_first]
+                dictionary()
                 stdscr.clear()
                 stdscr.addstr(2, 3, ''.join(sentence[0:_counter_second]), green_on_black)
                 stdscr.refresh()

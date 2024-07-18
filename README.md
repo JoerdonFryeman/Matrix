@@ -29,6 +29,8 @@ Some program settings can be specified in the matrix_config.json file.
 Change color: BLACK, BLUE, CYAN, GREEN, MAGENTA, RED, WHITE, YELLOW.
 Enable or disable matrix or neo modules.
 Write your sentence: "Fall asleep, Neo..."
-You can choose the rate of bold symbols, speed of rain and rate of void.
+You can choose the rate of threads, voids or symbols and speed of rain.
 With true or false you may enable and disable some kinds of symbols.
 The default settings can be restored by deleting the matrix_config.json file and restarting the program.
+## Support with Bitcoin
+bc1qewfgtrrg2gqgtvzl5d2pr9pte685pp5n3g6scy

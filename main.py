@@ -16,10 +16,10 @@ def verify_os_for_requirements():
             with open('requirements.txt', 'w') as file:  # Your requirements.txt file is here...
                 file.write('windows-curses==2.3.3')
         except FileExistsError:
-            pass
+            print('\nThe file requirements.txt has been found!')
         return True
     else:
-        print('This program is currently for Linux or Windows only!')
+        print('\nThis program is currently for Linux or Windows only!')
         return False
 
 
@@ -34,7 +34,9 @@ def main():
             if not neo.neo_enable and not matrix.matrix_enable:
                 print('Neo and matrix modules are disabled, what else do you want to see here?')
         except NameError:
-            print('You must install the requirements.txt file!')
+            print('\nFor Windows you must install the requirements.txt file!')
+        except AttributeError:
+            print('\nAttribute error...')
 
 
 if __name__ == '__main__':

@@ -8,12 +8,11 @@ from configuration import (
 
 
 class Matrix(Configuration):
-    __slots__ = ('_init_height', 'threads_rate', 'locker')
+    __slots__ = ('_init_height', 'locker')
 
     def __init__(self):
         super().__init__()
         self._init_height = 0
-        self.threads_rate = 60
         self.locker = Lock()
 
     @staticmethod

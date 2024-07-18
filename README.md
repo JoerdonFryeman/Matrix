@@ -31,3 +31,4 @@ Enable or disable matrix or neo modules.
 Write your sentence: "Fall asleep, Neo..."
 You can choose the rate of bold symbols, speed of rain and rate of void.
 With true or false you may enable and disable some kinds of symbols.
+The default settings can be restored by deleting the matrix_config.json file and restarting the program.

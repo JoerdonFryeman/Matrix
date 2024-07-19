@@ -6,31 +6,31 @@ try:
         COLOR_GREEN, COLOR_MAGENTA, COLOR_RED, COLOR_WHITE, COLOR_YELLOW, color_pair, A_BOLD, error, wrapper
     )
 except ModuleNotFoundError:
-    print('\nThe windows-curses module must be installed for the Windows operating system!')
+    print('\nFor Windows you must install the requirements_for_windows.txt file!\n')
 
 
 class Configuration:
     @staticmethod
     def get_json_data() -> dict:
-        true = True
         json_data = {
             "color": "GREEN", "neo": {
-                "enable": true, "sentence_first": "Wake up, Neo...", "sentence_second": "The Matrix has you...",
+                "enable": True, "sentence_first": "Wake up, Neo...", "sentence_second": "The Matrix has you...",
                 "sentence_third": "Follow the white rabbit.", "sentence_fourth": "Knock, knock, Neo."
             },
             "matrix": {
-                "enable": true, "threads_rate": 73, "bold_symbols_rate": 9,
-                "min_speed": 2, "max_speed": 8, "void_rate": 3, "digits": true, "symbols": true,
-                "currencies": true, "greek": true, "latin": true, "cyrillic": true, "chinese": true}
+                "enable": True, "threads_rate": 73, "bold_symbols_rate": 9, "min_speed": 2, "max_speed": 8,
+                "void_rate": 3, "digits": True, "symbols": True, "currencies": True, "greek": True,
+                "latin": True, "cyrillic": True, "chinese": True}
         }
         try:
             with open('matrix_config.json') as file:
                 data = load(file)
             return data
         except FileNotFoundError:
+            print('\nFileNotFoundError! File matrix_config.json not found!')
             with open('matrix_config.json', 'w', encoding='UTF-8') as file:
                 dump(json_data, file)
-            print('\nFile matrix_config.json not found! You need to restart the program!')
+            print('\nThe file matrix_config.json was successfully created!')
 
     def __init__(self):
         self.variables = self.get_json_data()
@@ -57,7 +57,7 @@ class Configuration:
             self.cyrillic = self.matrix['cyrillic']
             self.chinese = self.matrix['chinese']
         except TypeError:
-            print('\nError reading data from matrix_config.json file!')
+            print('\nTypeError! Variables can\'t be initialized!')
 
     def verify_color(self):
         dictionary = {

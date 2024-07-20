@@ -2,8 +2,8 @@ from time import sleep
 from random import randint, choice
 from threading import Thread, Lock
 from configuration import (
-    noecho, cbreak, curs_set, start_color, init_pair,
-    COLOR_BLACK, color_pair, A_BOLD, error, wrapper, Configuration
+    Configuration, wrapper, error, noecho, cbreak, curs_set, baudrate,
+    start_color, init_pair, use_default_colors, color_pair, A_BOLD
 )
 
 
@@ -39,7 +39,8 @@ class Matrix(Configuration):
         :param current_height: int
         """
         start_color()
-        init_pair(1, self.verify_color(), COLOR_BLACK)
+        use_default_colors()
+        init_pair(1, self.verify_color(), -1)
         green_on_black = color_pair(1)
         if current_height % randint(3, self.bold_symbols_rate) == 0:
             return green_on_black | A_BOLD
@@ -58,8 +59,8 @@ class Matrix(Configuration):
         cbreak()  # disabling the character reading delay
         curs_set(False)
         if switch == 0:
-            return stdscr.addstr(current_height, init_width, ' ')
-        return stdscr.addstr(current_height, init_width, self.generate_symbol(*args), self.get_color(current_height))
+            return stdscr.addch(current_height, init_width, ' ')
+        return stdscr.addch(current_height, init_width, self.generate_symbol(*args), self.get_color(current_height))
 
     def move_droplet_of_symbols(self, stdscr, _current_height: int):
         """
@@ -74,7 +75,6 @@ class Matrix(Configuration):
             max_height, max_width = stdscr.getmaxyx()
             try:
                 with self.locker:
-                    stdscr.refresh()
                     if _current_height == randint(max_height // 3, max_height):
                         raise error
                     stdscr.addstr(_current_height, _init_width, ' ' * randint(0, self.void_rate))
@@ -82,7 +82,14 @@ class Matrix(Configuration):
                         stdscr, _current_height, _init_width, _switch, self.digits, self.symbols,
                         self.currencies, self.greek, self.latin, self.cyrillic, self.chinese
                     )
-                    stdscr.addstr(0, 0, '')
+                    dictionary = {
+                        True: lambda: stdscr.addstr(
+                            0, 0, f'{baudrate()} | {self.threads_rate} | {init_speed} | {max_width}x{max_height}'
+                        ),
+                        False: lambda: stdscr.addstr(0, 0, '')
+                    }[self.info]
+                    dictionary()
+                    stdscr.refresh()
                     _current_height += 1
                 sleep(init_speed)
             except error:

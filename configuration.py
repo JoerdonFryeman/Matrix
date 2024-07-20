@@ -2,8 +2,9 @@ from json import load, dump
 
 try:
     from curses import (
-        noecho, cbreak, curs_set, start_color, init_pair, COLOR_BLACK, COLOR_BLUE, COLOR_CYAN,
-        COLOR_GREEN, COLOR_MAGENTA, COLOR_RED, COLOR_WHITE, COLOR_YELLOW, color_pair, A_BOLD, error, wrapper
+        wrapper, error, noecho, cbreak, curs_set, baudrate,
+        start_color, init_pair, use_default_colors, COLOR_BLACK, COLOR_BLUE, COLOR_CYAN,
+        COLOR_GREEN, COLOR_MAGENTA, COLOR_RED, COLOR_WHITE, COLOR_YELLOW, color_pair, A_BOLD
     )
 except ModuleNotFoundError:
     print('\nFor Windows you must install the requirements_for_windows.txt file!\n')
@@ -13,7 +14,7 @@ class Configuration:
     @staticmethod
     def get_json_data() -> dict:
         json_data = {
-            "color": "GREEN", "neo": {
+            "info": False, "color": "GREEN", "neo": {
                 "enable": True, "sentence_first": "Wake up, Neo...", "sentence_second": "The Matrix has you...",
                 "sentence_third": "Follow the white rabbit.", "sentence_fourth": "Knock, knock, Neo."
             },
@@ -35,6 +36,7 @@ class Configuration:
     def __init__(self):
         self.variables = self.get_json_data()
         try:
+            self.info = self.variables['info']
             self.color = self.variables['color']
             self.neo = self.variables['neo']
             self.neo_enable = self.neo['enable']

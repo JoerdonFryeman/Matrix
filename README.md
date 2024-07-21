@@ -1,7 +1,7 @@
 # Matrix
 ### Your personal green rain of code in a Linux or Windows console!
 
-![matrix_image_one](https://github.com/user-attachments/assets/7bbed5c3-126e-443e-b4a3-1e008c93a8c0)
+![matrix](https://github.com/user-attachments/assets/f1c24856-bace-4267-b92b-5668167f9e47)
 
 You can start the project in your console
 ``` code

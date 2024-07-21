@@ -16,7 +16,7 @@ Create and activate a virtual environment
 python -m venv venv
 venv\Scripts\activate
 ```
-![matrix_image](https://github.com/user-attachments/assets/fc471964-571d-4ddb-850f-0cfcd49943d4)
+![matrix_image_one](https://github.com/user-attachments/assets/7bbed5c3-126e-443e-b4a3-1e008c93a8c0)
 Install the requirements and run the script
 ``` code
 python.exe -m pip install --upgrade pip

@@ -2,7 +2,7 @@ from time import sleep
 from random import randint, choice
 from threading import Thread, Lock
 from configuration import (
-    Configuration, wrapper, error, noecho, cbreak, curs_set, baudrate,
+    Configuration, wrapper, error, cbreak, curs_set, baudrate,
     start_color, init_pair, use_default_colors, color_pair, A_BOLD
 )
 
@@ -38,9 +38,7 @@ class Matrix(Configuration):
         The function returns color of the random symbol
         :param current_height: int
         """
-        start_color()
-        use_default_colors()
-        init_pair(1, self.verify_color(), -1)
+        start_color(), use_default_colors(), init_pair(1, self.verify_color(), -1)
         green_on_black = color_pair(1)
         if current_height % randint(3, self.bold_symbols_rate) == 0:
             return green_on_black | A_BOLD
@@ -55,9 +53,7 @@ class Matrix(Configuration):
         :param switch: int
         :param args: bool
         """
-        noecho()  # disabling the display of input characters
-        cbreak()  # disabling the character reading delay
-        curs_set(False)
+        cbreak(), curs_set(False)
         if switch == 0:
             return stdscr.addch(current_height, init_width, ' ')
         return stdscr.addch(current_height, init_width, self.generate_symbol(*args), self.get_color(current_height))
@@ -68,8 +64,7 @@ class Matrix(Configuration):
         :param stdscr: initscr
         :param _current_height: int
         """
-        _init_width = 1
-        _switch = randint(0, 1)
+        _init_width, _switch = 1, randint(0, 1)
         init_speed = float(f'{0.}{randint(self.min_speed, self.max_speed)}')
         while True:
             max_height, max_width = stdscr.getmaxyx()
@@ -88,8 +83,7 @@ class Matrix(Configuration):
                         ),
                         False: lambda: stdscr.addstr(0, 0, '')
                     }[self.info]
-                    dictionary()
-                    stdscr.refresh()
+                    dictionary(), stdscr.refresh()
                     _current_height += 1
                 sleep(init_speed)
             except error:

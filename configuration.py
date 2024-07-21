@@ -2,9 +2,8 @@ from json import load, dump
 
 try:
     from curses import (
-        wrapper, error, noecho, cbreak, curs_set, baudrate,
-        start_color, init_pair, use_default_colors, COLOR_BLACK, COLOR_BLUE, COLOR_CYAN,
-        COLOR_GREEN, COLOR_MAGENTA, COLOR_RED, COLOR_WHITE, COLOR_YELLOW, color_pair, A_BOLD
+        wrapper, error, cbreak, curs_set, baudrate, start_color, init_pair, use_default_colors, color_pair, A_BOLD,
+        COLOR_BLACK, COLOR_BLUE, COLOR_CYAN, COLOR_GREEN, COLOR_MAGENTA, COLOR_RED, COLOR_WHITE, COLOR_YELLOW
     )
 except ModuleNotFoundError:
     print('\nFor Windows you must install the requirements_for_windows.txt file!\n')

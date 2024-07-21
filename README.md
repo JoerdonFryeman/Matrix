@@ -1,5 +1,8 @@
 # Matrix
 ### Your personal green rain of code in a Linux or Windows console!
+
+![matrix_image_one](https://github.com/user-attachments/assets/7bbed5c3-126e-443e-b4a3-1e008c93a8c0)
+
 You can start the project in your console
 ``` code
 git clone https://github.com/Kepler54/Matrix
@@ -16,14 +19,12 @@ Create and activate a virtual environment
 python -m venv venv
 venv\Scripts\activate
 ```
-![matrix_image_one](https://github.com/user-attachments/assets/7bbed5c3-126e-443e-b4a3-1e008c93a8c0)
 Install the requirements and run the script
 ``` code
 python.exe -m pip install --upgrade pip
 pip install -r requirements_for_windows.txt
 python main.py
 ```
-
 ### Settings
 Some program settings can be specified in the matrix_config.json file.
 

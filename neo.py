@@ -1,6 +1,6 @@
 from time import sleep
 from random import randint
-from configuration import init_pair, COLOR_BLACK, color_pair, wrapper, Configuration
+from configuration import init_pair, use_default_colors, color_pair, wrapper, Configuration
 
 
 class Neo(Configuration):
@@ -9,8 +9,8 @@ class Neo(Configuration):
         The function takes a list of words and return as a printed input
         :param stdscr: initscr
         """
-        init_pair(1, self.verify_color(), COLOR_BLACK)
-        green_on_black = color_pair(1)
+        use_default_colors(), init_pair(1, self.verify_color(), -1)
+        color_and_background = color_pair(1)
         _counter_first = 0
         for text in (self.sentence_first, self.sentence_second, self.sentence_third):
             _counter_first += 1
@@ -25,11 +25,11 @@ class Neo(Configuration):
                 }[_counter_first]
                 dictionary()
                 stdscr.clear()
-                stdscr.addstr(2, 3, ''.join(sentence[0:_counter_second]), green_on_black)
+                stdscr.addstr(2, 3, ''.join(sentence[0:_counter_second]), color_and_background)
                 stdscr.refresh()
             sleep(float(4))
         stdscr.clear()
-        stdscr.addstr(2, 3, self.sentence_fourth, green_on_black)
+        stdscr.addstr(2, 3, self.sentence_fourth, color_and_background)
         stdscr.refresh()
         sleep(4.2)
         stdscr.clear()

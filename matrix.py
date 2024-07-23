@@ -2,8 +2,7 @@ from time import sleep
 from random import randint, choice
 from threading import Thread, Lock
 from configuration import (
-    Configuration, wrapper, error, cbreak, curs_set, baudrate,
-    start_color, init_pair, use_default_colors, color_pair, A_BOLD
+    Configuration, wrapper, error, cbreak, curs_set, baudrate, init_pair, use_default_colors, color_pair, A_BOLD
 )
 
 
@@ -38,11 +37,11 @@ class Matrix(Configuration):
         The function returns color of the random symbol
         :param current_height: int
         """
-        start_color(), use_default_colors(), init_pair(1, self.verify_color(), -1)
-        green_on_black = color_pair(1)
+        use_default_colors(), init_pair(1, self.verify_color(), -1)
+        color_and_background = color_pair(1)
         if current_height % randint(3, self.bold_symbols_rate) == 0:
-            return green_on_black | A_BOLD
-        return green_on_black
+            return color_and_background | A_BOLD
+        return color_and_background
 
     def draw_symbol(self, stdscr, current_height: int, init_width: int, switch: int, *args: bool) -> object:
         """

@@ -10,30 +10,30 @@ except ModuleNotFoundError:
 
 
 class Configuration:
-    @staticmethod
-    def get_json_data() -> dict:
-        json_data = {
-            "info": False, "color": "GREEN", "neo": {
-                "enable": True, "sentence_first": "Wake up, Neo...", "sentence_second": "The Matrix has you...",
-                "sentence_third": "Follow the white rabbit.", "sentence_fourth": "Knock, knock, Neo."
-            },
-            "matrix": {
-                "enable": True, "threads_rate": 73, "bold_symbols_rate": 9, "min_speed": 2, "max_speed": 8,
-                "void_rate": 3, "digits": True, "symbols": True, "currencies": True, "greek": True,
-                "latin": True, "cyrillic": True, "chinese": True}
-        }
+    json_data = {
+        "info": False, "color": "GREEN", "neo": {
+            "enable": True, "sentence_first": "Wake up, Neo...", "sentence_second": "The Matrix has you...",
+            "sentence_third": "Follow the white rabbit.", "sentence_fourth": "Knock, knock, Neo."
+        },
+        "matrix": {
+            "enable": True, "threads_rate": 73, "bold_symbols_rate": 9, "min_speed": 2, "max_speed": 8,
+            "void_rate": 3, "digits": True, "symbols": True, "currencies": True, "greek": True,
+            "latin": True, "cyrillic": True, "chinese": True}
+    }
+
+    def get_json_data(self, config_name: str) -> dict:
         try:
-            with open('matrix_config.json') as file:
+            with open(f'{config_name}.json') as file:
                 data = load(file)
             return data
         except FileNotFoundError:
-            print('\nFileNotFoundError! File matrix_config.json not found!')
-            with open('matrix_config.json', 'w', encoding='UTF-8') as file:
-                dump(json_data, file)
-            print('\nThe file matrix_config.json was successfully created!')
+            print(f'\nFileNotFoundError! File {config_name}.json not found!')
+            with open(f'{config_name}.json', 'w', encoding='UTF-8') as file:
+                dump(self.json_data, file)
+            print(f'\nThe file {config_name}.json was successfully created!')
 
     def __init__(self):
-        self.variables = self.get_json_data()
+        self.variables = self.get_json_data('matrix_config')
         try:
             self.info = self.variables['info']
             self.color = self.variables['color']

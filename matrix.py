@@ -17,7 +17,7 @@ class Matrix(Configuration):
     @staticmethod
     def generate_symbol(*args: bool) -> str:
         """
-        This function returns a random character from boolean lists
+        This method returns a random character from boolean lists
         :param args: bool
         :return: symbol
         """
@@ -34,7 +34,7 @@ class Matrix(Configuration):
 
     def get_color(self, current_height: int) -> int:
         """
-        The function returns color of the random symbol
+        The method returns color of the random symbol
         :param current_height: current height of the symbol
         :return: value of color
         """
@@ -46,7 +46,7 @@ class Matrix(Configuration):
 
     def draw_symbol(self, stdscr, current_height: int, init_width: int, switch: int, *args: bool) -> object:
         """
-        The function returns the random symbol in the wrapper of the screen
+        The method returns the random symbol in the wrapper of the screen
         :param stdscr: initscr
         :param current_height: current height of the symbol
         :param init_width: initial width of the symbol
@@ -61,7 +61,7 @@ class Matrix(Configuration):
 
     def get_info(self, stdscr, init_speed: float, max_width: int, max_height: int) -> object:
         """
-        The function gives info
+        The method gives info
         :param stdscr: initscr
         :param init_speed: initial width of the drop
         :param max_width: width of the screen
@@ -79,7 +79,7 @@ class Matrix(Configuration):
     @staticmethod
     def make_drop_height_random(current_height: int, max_height: int):
         """
-        The function raises error
+        The method raises error
         :param current_height: current height of the symbol
         :param max_height: height of the screen
         """
@@ -88,7 +88,7 @@ class Matrix(Configuration):
 
     def move_droplet_of_symbols(self, stdscr, _current_height: int):
         """
-        The function moves the droplet of symbols down
+        The method moves the droplet of symbols down
         :param stdscr: initscr
         :param _current_height: current height of the symbol
         """
@@ -114,7 +114,7 @@ class Matrix(Configuration):
                 init_speed = float(f'{0.}{randint(self.min_speed, self.max_speed)}')
 
     def make_threads_of_droplets(self):
-        """The function makes threads of droplets"""
+        """The method makes threads of droplets"""
         try:
             for i in range(0, self.threads_rate):
                 Thread(target=wrapper, args=(self.move_droplet_of_symbols, self._init_height)).start()

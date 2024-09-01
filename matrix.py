@@ -17,8 +17,9 @@ class Matrix(Configuration):
     @staticmethod
     def generate_symbol(*args: bool) -> str:
         """
-        This function generates a random character from boolean lists
+        This function returns a random character from boolean lists
         :param args: bool
+        :return: symbol
         """
         symbol_list = [
             *[i for i in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9') if args[0]],
@@ -31,36 +32,65 @@ class Matrix(Configuration):
         ]
         return symbol_list[randint(0, len(symbol_list) - 1)]
 
-    def get_color(self, current_height: int) -> object:
+    def get_color(self, current_height: int) -> int:
         """
         The function returns color of the random symbol
-        :param current_height: int
+        :param current_height: current height of the symbol
+        :return: value of color
         """
         use_default_colors(), init_pair(1, self.verify_color(), -1)
-        color_and_background = color_pair(1)
+        symbol_color = color_pair(1)
         if current_height % randint(3, self.bold_symbols_rate) == 0:
-            return color_and_background | A_BOLD
-        return color_and_background
+            return symbol_color | A_BOLD
+        return symbol_color
 
     def draw_symbol(self, stdscr, current_height: int, init_width: int, switch: int, *args: bool) -> object:
         """
-        The function returns the random symbol on the screen
+        The function returns the random symbol in the wrapper of the screen
         :param stdscr: initscr
-        :param current_height: int
-        :param init_width: int
-        :param switch: int
+        :param current_height: current height of the symbol
+        :param init_width: initial width of the symbol
+        :param switch: switching between the drop and the void
         :param args: bool
+        :return: object of curses
         """
         cbreak(), curs_set(False)
         if switch == 0:
             return stdscr.addch(current_height, init_width, ' ')
         return stdscr.addch(current_height, init_width, self.generate_symbol(*args), self.get_color(current_height))
 
+    def get_info(self, stdscr, init_speed: float, max_width: int, max_height: int) -> object:
+        """
+        The function gives info
+        :param stdscr: initscr
+        :param init_speed: initial width of the drop
+        :param max_width: width of the screen
+        :param max_height: height of the screen
+        :return: object of curses
+        """
+        match self.info:
+            case True:
+                return stdscr.addstr(
+                    0, 0, f'{baudrate()} | {self.threads_rate} | {init_speed} | {max_width}x{max_height}'
+                )
+            case False:
+                return stdscr.addstr(0, 0, '')
+
+    @staticmethod
+    def make_drop_height_random(current_height: int, max_height: int):
+        """
+        The function raises error
+        :param current_height: current height of the symbol
+        :param max_height: height of the screen
+        """
+        if current_height == randint(max_height // 3, max_height):
+            raise error
+
     def move_droplet_of_symbols(self, stdscr, _current_height: int):
         """
         The function moves the droplet of symbols down
         :param stdscr: initscr
-        :param _current_height: int
+        :param _current_height: current height of the symbol
         """
         _init_width, _switch = 1, randint(0, 1)
         init_speed = float(f'{0.}{randint(self.min_speed, self.max_speed)}')
@@ -68,20 +98,14 @@ class Matrix(Configuration):
             max_height, max_width = stdscr.getmaxyx()
             try:
                 with self.locker:
-                    if _current_height == randint(max_height // 3, max_height):
-                        raise error
+                    self.make_drop_height_random(_current_height, max_height)
                     stdscr.addstr(_current_height, _init_width, ' ' * randint(0, self.void_rate))
                     self.draw_symbol(
                         stdscr, _current_height, _init_width, _switch, self.digits, self.symbols,
                         self.currencies, self.greek, self.latin, self.cyrillic, self.chinese
                     )
-                    dictionary = {
-                        True: lambda: stdscr.addstr(
-                            0, 0, f'{baudrate()} | {self.threads_rate} | {init_speed} | {max_width}x{max_height}'
-                        ),
-                        False: lambda: stdscr.addstr(0, 0, '')
-                    }[self.info]
-                    dictionary(), stdscr.refresh()
+                    self.get_info(stdscr, init_speed, max_width, max_height)
+                    stdscr.refresh()
                     _current_height += 1
                 sleep(init_speed)
             except error:

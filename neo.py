@@ -4,35 +4,67 @@ from configuration import init_pair, use_default_colors, color_pair, wrapper, Co
 
 
 class Neo(Configuration):
+    @staticmethod
+    def get_click_speed(counter_first: int) -> float:
+        """
+        The function returns a random float value from 0.1 to 0.3
+        :param counter_first: value of counter first
+        :return: random value
+        """
+        dictionary = {
+            1: lambda: float(f'0.{randint(1, 3)}'),
+            2: lambda: float(f'0.{randint(2, 4)}'),
+            3: lambda: float(f'0.{randint(1, 3)}')
+        }[counter_first]
+        return dictionary()
+
+    def print_sentence(self, stdscr, sentence: list, counter_second: int, counter_first: int, symbol_color: int):
+        """
+        The function prints the sentence in the wrapper of the screen
+        :param stdscr: initscr
+        :param sentence: text
+        :param counter_second: value of counter second
+        :param counter_first: value of counter first
+        :param symbol_color: value of color pair
+        """
+        for i in range(len(sentence)):
+            counter_second += 1
+            sleep(self.get_click_speed(counter_first))
+            stdscr.clear()
+            stdscr.addstr(2, 3, ''.join(sentence[0:counter_second]), symbol_color)
+            stdscr.refresh()
+
+    def get_split_sentence(self, stdscr, counter_first: int, symbol_color: int):
+        """
+        The function splits separate sentences into a list of letters
+        :param stdscr: initscr
+        :param counter_first: value of counter first
+        :param symbol_color: value of color pair
+        """
+        for text in (self.sentence_first, self.sentence_second, self.sentence_third):
+            counter_first += 1
+            _counter_second = 0
+            self.print_sentence(stdscr, [i for i in text], _counter_second, counter_first, symbol_color)
+            sleep(float(4))
+
     def wake_up_neo(self, stdscr):
         """
         The function takes a list of words and return as a printed input
         :param stdscr: initscr
         """
         use_default_colors(), init_pair(1, self.verify_color(), -1)
-        color_and_background = color_pair(1)
+        symbol_color = color_pair(1)
         _counter_first = 0
-        for text in (self.sentence_first, self.sentence_second, self.sentence_third):
-            _counter_first += 1
-            _counter_second = 0
-            sentence = [i for i in text]
-            for i in range(len(sentence)):
-                _counter_second += 1
-                dictionary = {
-                    1: lambda: sleep(float(f'0.{randint(1, 3)}')),
-                    2: lambda: sleep(float(f'0.{randint(2, 4)}')),
-                    3: lambda: sleep(float(f'0.{randint(1, 3)}'))
-                }[_counter_first]
-                dictionary()
-                stdscr.clear()
-                stdscr.addstr(2, 3, ''.join(sentence[0:_counter_second]), color_and_background)
-                stdscr.refresh()
-            sleep(float(4))
+        self.get_split_sentence(stdscr, _counter_first, symbol_color)
         stdscr.clear()
-        stdscr.addstr(2, 3, self.sentence_fourth, color_and_background)
+        stdscr.addstr(2, 3, self.sentence_fourth, symbol_color)
         stdscr.refresh()
         sleep(4.2)
         stdscr.clear()
 
-    def get_neo_wrapper(self):
+    def get_neo_wrapper(self) -> object:
+        """
+        The function returns wrapper of the screen
+        :return: wrapper
+        """
         return wrapper(self.wake_up_neo)

@@ -94,7 +94,7 @@ class Matrix(Configuration):
         """
         _init_width, _switch = 1, randint(0, 1)
         init_speed = float(f'{0.}{randint(self.min_speed, self.max_speed)}')
-        while True:
+        for i in range(self.cycle_number):
             max_height, max_width = stdscr.getmaxyx()
             try:
                 with self.locker:

@@ -45,6 +45,7 @@ class Configuration:
             self.sentence_fourth = self.neo['sentence_fourth']
             self.matrix = self.variables['matrix']
             self.matrix_enable = self.matrix['enable']
+            self.cycle_number = self.matrix['cycle_number']
             self.threads_rate = self.matrix['threads_rate']
             self.bold_symbols_rate = self.matrix['bold_symbols_rate']
             self.min_speed = self.matrix['min_speed']

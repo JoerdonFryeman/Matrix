@@ -2,7 +2,7 @@ from time import sleep
 from random import randint, choice
 from threading import Thread, Lock
 from configuration import (
-    Configuration, wrapper, error, cbreak, curs_set, baudrate, init_pair, use_default_colors, color_pair, A_BOLD
+    Configuration, wrapper, error, curs_set, baudrate, init_pair, use_default_colors, color_pair, A_BOLD
 )
 
 
@@ -54,7 +54,7 @@ class Matrix(Configuration):
         :param args: bool
         :return: object of curses
         """
-        cbreak(), curs_set(False)
+        curs_set(False)
         if switch == 0:
             return stdscr.addch(current_height, init_width, ' ')
         return stdscr.addch(current_height, init_width, self.generate_symbol(*args), self.get_color(current_height))

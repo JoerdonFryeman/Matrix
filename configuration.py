@@ -16,8 +16,8 @@ class Configuration:
             "sentence_third": "Follow the white rabbit.", "sentence_fourth": "Knock, knock, Neo."
         },
         "matrix": {
-            "enable": True, "threads_rate": 73, "bold_symbols_rate": 9, "min_speed": 2, "max_speed": 8,
-            "void_rate": 3, "digits": True, "symbols": True, "currencies": True, "greek": True,
+            "enable": True, "cycle_number": 10000000, "threads_rate": 60, "bold_symbols_rate": 9, "min_speed": 2,
+            "max_speed": 8, "void_rate": 3, "digits": True, "symbols": True, "currencies": True, "greek": True,
             "latin": True, "cyrillic": True, "chinese": True}
     }
 

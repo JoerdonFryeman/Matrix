@@ -43,8 +43,8 @@ class Neo(Configuration):
         """
         for text in (self.sentence_first, self.sentence_second, self.sentence_third):
             counter_first += 1
-            _counter_second = 0
-            self.print_sentence(stdscr, [i for i in text], _counter_second, counter_first, symbol_color)
+            counter_second = 0
+            self.print_sentence(stdscr, [i for i in text], counter_second, counter_first, symbol_color)
             sleep(float(4))
 
     def wake_up_neo(self, stdscr):
@@ -54,8 +54,8 @@ class Neo(Configuration):
         """
         use_default_colors(), init_pair(1, self.verify_color(), -1)
         symbol_color = color_pair(1)
-        _counter_first = 0
-        self.get_split_sentence(stdscr, _counter_first, symbol_color)
+        counter_first = 0
+        self.get_split_sentence(stdscr, counter_first, symbol_color)
         stdscr.clear()
         stdscr.addstr(2, 3, self.sentence_fourth, symbol_color)
         stdscr.refresh()

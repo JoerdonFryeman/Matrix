@@ -86,31 +86,31 @@ class Matrix(Configuration):
         if current_height == randint(max_height // 3, max_height):
             raise error
 
-    def move_droplet_of_symbols(self, stdscr, _current_height: int):
+    def move_droplet_of_symbols(self, stdscr, current_height: int):
         """
         The method moves the droplet of symbols down
         :param stdscr: initscr
-        :param _current_height: current height of the symbol
+        :param current_height: current height of the symbol
         """
-        _init_width, _switch = 1, randint(0, 1)
+        init_width, switch = 1, randint(0, 1)
         init_speed = float(f'{0.}{randint(self.min_speed, self.max_speed)}')
         for i in range(self.cycle_number):
             max_height, max_width = stdscr.getmaxyx()
             try:
                 with self.locker:
-                    self.make_drop_height_random(_current_height, max_height)
-                    stdscr.addstr(_current_height, _init_width, ' ' * randint(0, self.void_rate))
+                    self.make_drop_height_random(current_height, max_height)
+                    stdscr.addstr(current_height, init_width, ' ' * randint(0, self.void_rate))
                     self.draw_symbol(
-                        stdscr, _current_height, _init_width, _switch, self.digits, self.symbols,
+                        stdscr, current_height, init_width, switch, self.digits, self.symbols,
                         self.currencies, self.greek, self.latin, self.cyrillic, self.chinese
                     )
                     self.get_info(stdscr, init_speed, max_width, max_height)
                     stdscr.refresh()
-                    _current_height += 1
+                    current_height += 1
                 sleep(init_speed)
             except error:
-                _current_height = self._init_height
-                _init_width = choice([i for i in range(1, max_width - 1, 2)])
+                current_height = self._init_height
+                init_width = choice([i for i in range(1, max_width - 1, 2)])
                 init_speed = float(f'{0.}{randint(self.min_speed, self.max_speed)}')
 
     def make_threads_of_droplets(self):

@@ -10,7 +10,7 @@ except ModuleNotFoundError:
 
 
 class Configuration:
-    json_data = {
+    _json_data = {
         "info": False, "color": "GREEN", "neo": {
             "enable": True, "sentence_first": "Wake up, Neo...", "sentence_second": "The Matrix has you...",
             "sentence_third": "Follow the white rabbit.", "sentence_fourth": "Knock, knock, Neo."
@@ -21,7 +21,8 @@ class Configuration:
             "latin": True, "cyrillic": True, "chinese": True}
     }
 
-    def get_json_data(self, config_name: str) -> dict:
+    @classmethod
+    def get_json_data(cls, config_name: str) -> dict:
         try:
             with open(f'{config_name}.json') as file:
                 data = load(file)
@@ -29,8 +30,14 @@ class Configuration:
         except FileNotFoundError:
             print(f'\nFileNotFoundError! File {config_name}.json not found!')
             with open(f'{config_name}.json', 'w', encoding='UTF-8') as file:
-                dump(self.json_data, file)
+                dump(cls._json_data, file)
             print(f'\nThe file {config_name}.json was successfully created!')
+
+    __slots__ = (
+        'variables', 'info', 'color', 'neo', 'neo_enable', 'sentence_first', 'sentence_second', 'sentence_third',
+        'sentence_fourth', 'matrix', 'matrix_enable', 'cycle_number', 'threads_rate', 'bold_symbols_rate', 'min_speed',
+        'max_speed', 'void_rate', 'digits', 'symbols', 'currencies', 'greek', 'latin', 'cyrillic', 'chinese'
+    )
 
     def __init__(self):
         self.variables = self.get_json_data('matrix_config')

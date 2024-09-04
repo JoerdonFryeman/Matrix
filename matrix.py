@@ -7,11 +7,11 @@ from configuration import (
 
 
 class Matrix(Configuration):
-    __slots__ = ('_init_height', 'locker')
+    __slots__ = ('init_height', 'locker')
 
     def __init__(self):
         super().__init__()
-        self._init_height = 0
+        self.init_height = 0
         self.locker = Lock()
 
     @staticmethod
@@ -109,7 +109,7 @@ class Matrix(Configuration):
                     current_height += 1
                 sleep(init_speed)
             except error:
-                current_height = self._init_height
+                current_height = self.init_height
                 init_width = choice([i for i in range(1, max_width - 1, 2)])
                 init_speed = float(f'{0.}{randint(self.min_speed, self.max_speed)}')
 
@@ -117,6 +117,6 @@ class Matrix(Configuration):
         """The method makes threads of droplets"""
         try:
             for i in range(0, self.threads_rate):
-                Thread(target=wrapper, args=(self.move_droplet_of_symbols, self._init_height)).start()
+                Thread(target=wrapper, args=(self.move_droplet_of_symbols, self.init_height)).start()
         except error:
             pass

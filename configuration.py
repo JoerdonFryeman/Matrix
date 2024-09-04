@@ -10,7 +10,7 @@ except ModuleNotFoundError:
 
 
 class Configuration:
-    _json_data = {
+    json_data = {
         "info": False, "color": "GREEN", "neo": {
             "enable": True, "sentence_first": "Wake up, Neo...", "sentence_second": "The Matrix has you...",
             "sentence_third": "Follow the white rabbit.", "sentence_fourth": "Knock, knock, Neo."
@@ -30,7 +30,7 @@ class Configuration:
         except FileNotFoundError:
             print(f'\nFileNotFoundError! File {config_name}.json not found!')
             with open(f'{config_name}.json', 'w', encoding='UTF-8') as file:
-                dump(cls._json_data, file)
+                dump(cls.json_data, file)
             print(f'\nThe file {config_name}.json was successfully created!')
 
     __slots__ = (

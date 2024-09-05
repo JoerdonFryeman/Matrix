@@ -28,6 +28,8 @@ python main.py
 ### Settings
 Some program settings can be specified in the matrix_config.json file.
 
+![matrix_colors](https://github.com/user-attachments/assets/6da55b9c-defb-41be-891d-7165047a3b04)
+
 Change color of rain: BLACK, BLUE, CYAN, GREEN, MAGENTA, RED, WHITE, YELLOW; 
 Enable or disable info mode, matrix or neo modules; 
 Write your own sentences for example: "Fall asleep, Neo...";

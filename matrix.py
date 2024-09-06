@@ -94,7 +94,7 @@ class Matrix(Configuration):
         """
         init_width, switch = 1, randint(0, 1)
         init_speed = float(f'{0.}{randint(self.min_speed, self.max_speed)}')
-        for i in range(self.cycle_number):
+        for _ in range(self.cycle_number):
             max_height, max_width = stdscr.getmaxyx()
             try:
                 with self.locker:
@@ -116,7 +116,7 @@ class Matrix(Configuration):
     def make_threads_of_droplets(self):
         """The method makes threads of droplets"""
         try:
-            for i in range(0, self.threads_rate):
+            for _ in range(0, self.threads_rate):
                 Thread(target=wrapper, args=(self.move_droplet_of_symbols, self.init_height)).start()
         except error:
             pass

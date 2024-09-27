@@ -4,23 +4,23 @@
 ![matrix](https://github.com/user-attachments/assets/f1c24856-bace-4267-b92b-5668167f9e47)
 
 You can start the project in your console
-``` code
+``` console
 git clone https://github.com/KeplerCoder/Matrix
 cd Matrix
 ```
 ### For Linux
 Just run the script
-``` code
+``` console
 python3 main.py
 ```
 ### For Windows
 Create and activate a virtual environment
-``` code
+``` console
 python -m venv venv
 venv\Scripts\activate
 ```
 Install the requirements and run the script
-``` code
+``` console
 python.exe -m pip install --upgrade pip
 pip install -r requirements_for_windows.txt
 python main.py

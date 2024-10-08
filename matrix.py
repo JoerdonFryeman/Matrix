@@ -68,13 +68,9 @@ class Matrix(Configuration):
         :param max_height: height of the screen
         :return: object of curses
         """
-        match self.info:
-            case True:
-                return stdscr.addstr(
-                    0, 0, f'{baudrate()} | {self.threads_rate} | {init_speed} | {max_width}x{max_height}'
-                )
-            case False:
-                return stdscr.addstr(0, 0, '')
+        if self.info:
+            return stdscr.addstr(0, 0, f'{baudrate()} | {self.threads_rate} | {init_speed} | {max_width}x{max_height}')
+        return stdscr.addstr(0, 0, '')
 
     @staticmethod
     def make_drop_height_random(current_height: int, max_height: int):

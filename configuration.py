@@ -1,4 +1,6 @@
+from io import TextIOWrapper
 from json import load, dump
+from typing import Dict
 
 try:
     from curses import (
@@ -22,16 +24,24 @@ class Configuration:
     }
 
     @classmethod
-    def get_json_data(cls, config_name: str) -> dict:
+    def get_json_data(cls, config_name: str) -> Dict:
         try:
-            with open(f'{config_name}.json') as file:
-                data = load(file)
+            with open(f'{config_name}.json') as read_file:
+                data = load(read_file)
             return data
         except FileNotFoundError:
             print(f'\nFileNotFoundError! File {config_name}.json not found!')
-            with open(f'{config_name}.json', 'w', encoding='UTF-8') as file:
-                dump(cls.json_data, file)
-            print(f'\nThe file {config_name}.json was successfully created!')
+            try:
+                with open(f'{config_name}.json', 'w',
+                          encoding='UTF-8') as write_file:
+                    if isinstance(write_file, TextIOWrapper):
+                        dump(cls.json_data, write_file)
+                    else:
+                        raise TypeError("Expected TextIOWrapper for the file type")
+                print(f'\nThe file {config_name}.json was successfully created!')
+            except OSError as e:
+                print(f'\nFailed to create file {config_name}.json due to {e}')
+            return cls.json_data
 
     __slots__ = (
         'variables', 'info', 'color', 'neo', 'neo_enable', 'sentence_first', 'sentence_second', 'sentence_third',

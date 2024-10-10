@@ -34,7 +34,7 @@ class Matrix(Configuration):
             *[i for i in ('Ё', 'ё', 'Э', 'э', 'Ф', 'ф', 'Ъ', 'ъ', 'Я', 'я') if args[5]],
             *[i for i in ('小', '西', '体', '人', '里', '是', '永', '甲', '字', '书') if args[6]],
         ]
-        return symbol_list[randint(0, len(symbol_list) - 1)]
+        return choice(symbol_list)
 
     def get_color(self, current_height: int) -> int:
         """

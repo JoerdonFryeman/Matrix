@@ -6,7 +6,7 @@ matrix = Matrix()
 
 
 def main():
-    """Entry point function"""
+    """Entry point function."""
     try:
         if neo.neo_enable:
             neo.get_neo_wrapper()

@@ -12,6 +12,10 @@ except ModuleNotFoundError:
 
 
 class Configuration:
+    """
+    The Configuration class is used for reading and managing configuration settings from a JSON file.
+    It sets various properties such as color, matrix parameters, and Neo-related sentences to be displayed.
+    """
     json_data = {
         "info": False, "color": "GREEN", "neo": {
             "enable": True, "sentence_first": "Wake up, Neo...", "sentence_second": "The Matrix has you...",
@@ -25,6 +29,12 @@ class Configuration:
 
     @classmethod
     def get_json_data(cls, config_name: str) -> Dict:
+        """
+        The method reads the JSON configuration file.
+        If the specified JSON file does not exist, it creates a new file with default configurations.
+        :param config_name: The name of the configuration file (without the .json extension).
+        :return Dict: The configuration data loaded from the JSON file.
+        """
         try:
             with open(f'{config_name}.json') as read_file:
                 data = load(read_file)
@@ -32,8 +42,7 @@ class Configuration:
         except FileNotFoundError:
             print(f'\nFileNotFoundError! File {config_name}.json not found!')
             try:
-                with open(f'{config_name}.json', 'w',
-                          encoding='UTF-8') as write_file:
+                with open(f'{config_name}.json', 'w', encoding='UTF-8') as write_file:
                     if isinstance(write_file, TextIOWrapper):
                         dump(cls.json_data, write_file)
                     else:
@@ -50,6 +59,10 @@ class Configuration:
     )
 
     def __init__(self):
+        """
+        Initializes the Configuration object.
+        Loads the configuration from the JSON file and sets the instance variables accordingly.
+        """
         self.variables = self.get_json_data('matrix_config')
         try:
             self.info = self.variables['info']
@@ -79,6 +92,10 @@ class Configuration:
             print('\nTypeError! Variables can\'t be initialized!')
 
     def verify_color(self):
+        """
+        Verifies the color setting from the configuration.
+        :return: COLOR_*: The color constant that matches the color configuration.
+        """
         dictionary = {
             'BLACK': lambda: COLOR_BLACK, 'BLUE': lambda: COLOR_BLUE,
             'CYAN': lambda: COLOR_CYAN, 'GREEN': lambda: COLOR_GREEN,

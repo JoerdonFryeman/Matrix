@@ -59,10 +59,6 @@ class Configuration:
     )
 
     def __init__(self):
-        """
-        Initializes the Configuration object.
-        Loads the configuration from the JSON file and sets the instance variables accordingly.
-        """
         self.variables = self.get_json_data('matrix_config')
         try:
             self.info = self.variables['info']
@@ -93,7 +89,7 @@ class Configuration:
 
     def verify_color(self):
         """
-        Verifies the color setting from the configuration.
+        The method verifies the color setting from the configuration.
         :return: COLOR_*: The color constant that matches the color configuration.
         """
         dictionary = {

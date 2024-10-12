@@ -36,7 +36,7 @@ class Configuration:
         :return Dict: The configuration data loaded from the JSON file.
         """
         try:
-            with open(f'{config_name}.json') as read_file:
+            with open(f'{config_name}.json', encoding='UTF-8') as read_file:
                 data = load(read_file)
             return data
         except FileNotFoundError:
@@ -44,7 +44,7 @@ class Configuration:
             try:
                 with open(f'{config_name}.json', 'w', encoding='UTF-8') as write_file:
                     if isinstance(write_file, TextIOWrapper):
-                        dump(cls.json_data, write_file)
+                        dump(cls.json_data, write_file, ensure_ascii=False, indent=4)
                     else:
                         raise TypeError("Expected TextIOWrapper for the file type")
                 print(f'\nThe file {config_name}.json was successfully created!')

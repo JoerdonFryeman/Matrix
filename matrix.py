@@ -1,6 +1,7 @@
 from time import sleep
 from random import randint, choice
 from threading import Thread, Lock
+
 from configuration import (
     Configuration, wrapper, error, curs_set, baudrate, init_pair, use_default_colors, color_pair, A_BOLD
 )
@@ -92,7 +93,8 @@ class Matrix(Configuration):
         :param stdscr: curses window object
         :param current_height: int
         """
-        init_width, switch = 1, randint(0, 1)
+        init_width = 1
+        switch = randint(0, 1)
         init_speed = float(f'{0.}{randint(self.min_speed, self.max_speed)}')
         for _ in range(self.cycle_number):
             max_height, max_width = stdscr.getmaxyx()

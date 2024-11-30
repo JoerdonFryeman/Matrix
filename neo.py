@@ -1,5 +1,6 @@
 from time import sleep
 from random import randint
+
 from configuration import init_pair, use_default_colors, color_pair, wrapper, Configuration
 
 

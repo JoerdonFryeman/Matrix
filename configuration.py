@@ -93,9 +93,8 @@ class Configuration:
         :return: COLOR_*: The color constant that matches the color configuration.
         """
         dictionary = {
-            'BLACK': lambda: COLOR_BLACK, 'BLUE': lambda: COLOR_BLUE,
-            'CYAN': lambda: COLOR_CYAN, 'GREEN': lambda: COLOR_GREEN,
-            'MAGENTA': lambda: COLOR_MAGENTA, 'RED': lambda: COLOR_RED,
+            'BLACK': lambda: COLOR_BLACK, 'BLUE': lambda: COLOR_BLUE, 'CYAN': lambda: COLOR_CYAN,
+            'GREEN': lambda: COLOR_GREEN, 'MAGENTA': lambda: COLOR_MAGENTA, 'RED': lambda: COLOR_RED,
             'WHITE': lambda: COLOR_WHITE, 'YELLOW': lambda: COLOR_YELLOW,
         }[self.color]
         return dictionary()

@@ -5,7 +5,7 @@
 
 You can start the project in your console
 ``` console
-git clone https://github.com/KeplerCoder/Matrix
+git clone https://github.com/JoerdonFryeman/Matrix
 cd Matrix
 ```
 ### For Linux

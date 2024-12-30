@@ -45,7 +45,7 @@ With true or false you may enable and disable some kinds of symbols.
 
 The default settings can be restored by deleting the matrix_config.json file and restarting the program.
 
-## License
+### License
 
 This project is being developed under the MIT license.
 

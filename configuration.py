@@ -1,3 +1,4 @@
+import os
 from io import TextIOWrapper
 from json import load, dump
 from typing import Dict
@@ -9,6 +10,14 @@ try:
     )
 except ModuleNotFoundError:
     print('\nFor Windows you must install the requirements_for_windows.txt file!\n')
+
+try:
+    directories: tuple[str, str] = ('config_files', 'icons')
+    for i in range(len(directories)):
+        os.mkdir(directories[i])
+        i += 1
+except FileExistsError:
+    pass
 
 
 class Configuration:
@@ -36,13 +45,13 @@ class Configuration:
         :return Dict: The configuration data loaded from the JSON file.
         """
         try:
-            with open(f'{config_name}.json', encoding='UTF-8') as read_file:
+            with open(f'config_files/{config_name}.json', encoding='UTF-8') as read_file:
                 data = load(read_file)
             return data
         except FileNotFoundError:
             print(f'\nFileNotFoundError! File {config_name}.json not found!')
             try:
-                with open(f'{config_name}.json', 'w', encoding='UTF-8') as write_file:
+                with open(f'config_files/{config_name}.json', 'w', encoding='UTF-8') as write_file:
                     if isinstance(write_file, TextIOWrapper):
                         dump(cls.json_data, write_file, ensure_ascii=False, indent=4)
                     else:

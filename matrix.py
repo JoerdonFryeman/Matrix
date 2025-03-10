@@ -74,7 +74,11 @@ class Matrix(Configuration):
         :return: object of curses
         """
         if self.info:
-            return stdscr.addstr(0, 0, f'{baudrate()} | {self.threads_rate} | {init_speed} | {max_width}x{max_height}')
+            return stdscr.addstr(
+                0, 0,
+                f'{baudrate()} | {self.threads_rate} | {init_speed} | {max_width}x{max_height} | '
+                f'GitHub: https://github.com/JoerdonFryeman/Matrix'
+            )
         return stdscr.addstr(0, 0, '')
 
     @staticmethod

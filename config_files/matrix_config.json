@@ -11,10 +11,10 @@
     "matrix": {
         "enable": true,
         "cycle_number": 10000000,
-        "threads_rate": 60,
+        "threads_rate": 40,
         "bold_symbols_rate": 9,
         "min_speed": 2,
-        "max_speed": 8,
+        "max_speed": 7,
         "void_rate": 3,
         "digits": true,
         "symbols": true,

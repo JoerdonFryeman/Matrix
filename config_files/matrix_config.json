@@ -11,7 +11,7 @@
     "matrix": {
         "enable": true,
         "cycle_number": 10000000,
-        "threads_rate": 40,
+        "threads_rate": 35,
         "bold_symbols_rate": 8,
         "min_speed": 2,
         "max_speed": 6,

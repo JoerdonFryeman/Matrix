@@ -64,22 +64,28 @@ class Matrix(Configuration):
             return stdscr.addch(current_height, init_width, ' ')
         return stdscr.addch(current_height, init_width, self.generate_symbol(*args), self.get_color(current_height))
 
-    def get_info(self, stdscr, init_speed: float, max_width: int, max_height: int) -> object:
+    def get_info(self, stdscr, init_speed: float, max_height: int, max_width: int) -> object:
         """
         The method displays information on the screen.
         :param stdscr: curses window object
         :param init_speed: float
-        :param max_width: int
         :param max_height: int
+        :param max_width: int
         :return: object of curses
         """
         if self.info:
-            return stdscr.addstr(
-                0, 0,
-                f'{baudrate()} | {self.threads_rate} | {init_speed} | {max_width}x{max_height} | '
-                f'GitHub: https://github.com/JoerdonFryeman/Matrix'
-            )
-        return stdscr.addstr(0, 0, '')
+            try:
+                br, tr, isp, mh, mw = baudrate(), self.threads_rate, init_speed, max_height, max_width
+                link = 'https://github.com/JoerdonFryeman/Matrix'
+                stdscr.addstr(10, 34, f'{" " * 47}')
+                stdscr.addstr(11, 34, f'{" " * 4}{br} | {tr} | {isp} | {mh}x{mw}{" " * 17}', self.verify_color())
+                stdscr.addstr(12, 34, f'{" " * 4}Matrix (version 1.0.5) | ЭЛЕКТРОНИКА 54{" " * 4}', self.verify_color())
+                stdscr.addstr(13, 34, f'{" " * 4}MIT License, (c) 2025 JoerdonFryeman{" " * 7}', self.verify_color())
+                stdscr.addstr(14, 34, f'{" " * 4}{link}{" " * 3}', self.verify_color())
+                stdscr.addstr(15, 34, f'{" " * 47}')
+            except error:
+                pass
+        stdscr.addstr(0, 0, '')
 
     @staticmethod
     def make_drop_height_random(current_height: int, max_height: int):
@@ -109,7 +115,7 @@ class Matrix(Configuration):
                         stdscr, current_height, init_width, switch, self.digits, self.symbols,
                         self.currencies, self.greek, self.latin, self.cyrillic, self.chinese
                     )
-                    self.get_info(stdscr, init_speed, max_width, max_height)
+                    self.get_info(stdscr, init_speed, max_height, max_width)
                     stdscr.refresh()
                     current_height += 1
                 sleep(init_speed)

@@ -8,10 +8,8 @@ from configuration import (
 
 
 class Matrix(Configuration):
-    """
-    The Matrix class is utilized for performing various symbol operations,
-    such as generating random symbols, drawing symbols on the screen, and managing their display.
-    """
+    """The Matrix class is utilized for performing various symbol operations,"""
+
     __slots__ = ('init_height', 'locker')
 
     def __init__(self):
@@ -23,6 +21,7 @@ class Matrix(Configuration):
     def generate_symbol(*args: bool) -> str:
         """
         This method returns a random character from boolean lists.
+
         :param args: bool
         :return: symbol
         """
@@ -39,9 +38,10 @@ class Matrix(Configuration):
 
     def get_color(self, current_height: int) -> int:
         """
-        The method calculates and returns the color of the given symbol based on current height.
-        :param current_height: int
-        :return: int
+        The method returns color of the random symbol
+
+        :param current_height: current height of the symbol
+        :return: value of color
         """
         use_default_colors(), init_pair(1, self.verify_color(), -1)
         symbol_color = color_pair(1)
@@ -52,11 +52,13 @@ class Matrix(Configuration):
     def draw_symbol(self, stdscr, current_height: int, init_width: int, switch: int, *args: bool) -> object:
         """
         The method draws a random symbol on the screen at specified position.
-        :param stdscr: curses window object
-        :param current_height: int
-        :param init_width: int
-        :param switch: int
+
+        :param stdscr: initscr
+        :param current_height: current height of the symbol
+        :param init_width: initial width of the symbol
+        :param switch: switching between the drop and the void
         :param args: bool
+
         :return: object of curses
         """
         curs_set(False)
@@ -64,13 +66,15 @@ class Matrix(Configuration):
             return stdscr.addch(current_height, init_width, ' ')
         return stdscr.addch(current_height, init_width, self.generate_symbol(*args), self.get_color(current_height))
 
-    def get_info(self, stdscr, init_speed: float, max_height: int, max_width: int) -> object:
+    def display_info(self, stdscr, init_speed: float, max_height: int, max_width: int) -> object:
         """
         The method displays information on the screen.
-        :param stdscr: curses window object
-        :param init_speed: float
-        :param max_height: int
-        :param max_width: int
+
+        :param stdscr: initscr
+        :param init_speed: initial width of the drop
+        :param max_width: width of the screen
+        :param max_height: height of the screen
+
         :return: object of curses
         """
         if self.info:
@@ -91,8 +95,9 @@ class Matrix(Configuration):
     def make_drop_height_random(current_height: int, max_height: int):
         """
         The method determines if the drop height should be reset.
-        :param current_height: int
-        :param max_height: int
+
+        :param current_height: current height of the symbol
+        :param max_height: height of the screen
         """
         if current_height == randint(max_height // 3, max_height):
             raise error
@@ -100,8 +105,9 @@ class Matrix(Configuration):
     def move_droplet_of_symbols(self, stdscr, current_height: int):
         """
         The method moves the droplet of symbols down the screen.
+
         :param stdscr: curses window object
-        :param current_height: int
+        :param current_height: current height of the symbol
         """
         init_width, switch = 1, randint(0, 1)
         init_speed = float(f'{0.}{randint(self.min_speed, self.max_speed)}')
@@ -115,7 +121,7 @@ class Matrix(Configuration):
                         stdscr, current_height, init_width, switch, self.digits, self.symbols,
                         self.currencies, self.greek, self.latin, self.cyrillic, self.chinese
                     )
-                    self.get_info(stdscr, init_speed, max_height, max_width)
+                    self.display_info(stdscr, init_speed, max_height, max_width)
                     stdscr.refresh()
                     current_height += 1
                 sleep(init_speed)

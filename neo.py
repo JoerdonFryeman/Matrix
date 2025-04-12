@@ -5,15 +5,13 @@ from configuration import init_pair, use_default_colors, color_pair, wrapper, Co
 
 
 class Neo(Configuration):
-    """
-    The Neo class provides specific functionalities for displaying and animating sentences on a screen.
-    It includes methods for printing sentences with specific timing and effects.
-    """
+    """The Neo class provides specific functionalities for displaying and animating sentences on a screen."""
 
     @staticmethod
     def get_click_speed(counter_first: int) -> float:
         """
-        The method returns a random float value.
+        The method returns a random float value from 0.1 to 0.3
+
         :param counter_first: value of counter first
         :return: random value
         """
@@ -27,6 +25,7 @@ class Neo(Configuration):
     def print_sentence(self, stdscr, sentence: list, counter_second: int, counter_first: int, symbol_color: int):
         """
         The method prints the sentence in the wrapper of the screen.
+
         :param stdscr: initscr
         :param sentence: text
         :param counter_second: value of counter second
@@ -43,6 +42,7 @@ class Neo(Configuration):
     def get_split_sentence(self, stdscr, counter_first: int, symbol_color: int):
         """
         The method splits separate sentences into a list of letters.
+
         :param stdscr: initscr
         :param counter_first: value of counter first
         :param symbol_color: value of color pair
@@ -56,6 +56,7 @@ class Neo(Configuration):
     def wake_up_neo(self, stdscr):
         """
         The method takes a list of words and return as a printed input.
+
         :param stdscr: initscr
         """
         use_default_colors(), init_pair(1, self.verify_color(), -1)
@@ -71,6 +72,7 @@ class Neo(Configuration):
     def get_neo_wrapper(self) -> object:
         """
         The method returns wrapper of the screen.
+
         :return: wrapper
         """
         return wrapper(self.wake_up_neo)

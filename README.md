@@ -1,4 +1,4 @@
-# Matrix
+# ЭЛЕКТРОНИКА 54 (Matrix)
 
 Your personal green rain of code in a Linux or Windows console!
 
@@ -16,6 +16,7 @@ Your personal green rain of code in a Linux or Windows console!
 
 - Python 3.12
 - windows-curses 2.3.3 (for Windows)
+- The application was developed for Arch Linux with the KDE Plasma desktop environment, but should work in other distributions as well as with limitations in Windows.
 
 ## Installation
 

@@ -21,10 +21,8 @@ except FileExistsError:
 
 
 class Configuration:
-    """
-    The Configuration class is used for reading and managing configuration settings from a JSON file.
-    It sets various properties such as color, matrix parameters, and Neo-related sentences to be displayed.
-    """
+    """The Configuration class is used for reading and managing configuration settings from a JSON file."""
+
     json_data = {
         "info": False, "color": "GREEN", "neo": {
             "enable": True, "sentence_first": "Wake up, Neo...", "sentence_second": "The Matrix has you...",
@@ -41,6 +39,7 @@ class Configuration:
         """
         The method reads the JSON configuration file.
         If the specified JSON file does not exist, it creates a new file with default configurations.
+
         :param config_name: The name of the configuration file (without the .json extension).
         :return Dict: The configuration data loaded from the JSON file.
         """
@@ -99,6 +98,7 @@ class Configuration:
     def verify_color(self):
         """
         The method verifies the color setting from the configuration.
+
         :return: COLOR_*: The color constant that matches the color configuration.
         """
         dictionary = {

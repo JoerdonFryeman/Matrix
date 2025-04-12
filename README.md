@@ -2,7 +2,7 @@
 
 Your personal green rain of code in a Linux or Windows console!
 
-![matrix](https://github.com/user-attachments/assets/f1c24856-bace-4267-b92b-5668167f9e47)
+![Matrix](https://github.com/user-attachments/assets/f7948a4c-109f-4d6e-912f-dd921cc5fac8)
 
 ## Project structure
 

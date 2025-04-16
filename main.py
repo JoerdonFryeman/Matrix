@@ -5,7 +5,7 @@ neo = Neo()
 matrix = Matrix()
 
 
-def main():
+def main() -> None:
     """Entry point function."""
     try:
         if neo.neo_enable:

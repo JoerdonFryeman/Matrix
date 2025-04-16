@@ -22,15 +22,18 @@ class Configuration:
     """The Configuration class is used for reading and managing configuration settings from a JSON file."""
 
     matrix_config = {
-        "info": False, "color": "GREEN", "info_color": "MAGENTA", "neo": {
+        "neo": {
             "enable": True, "neo_color": "GREEN", "sentence_first": "Wake up, Neo...",
             "sentence_second": "The Matrix has you...", "sentence_third": "Follow the white rabbit.",
             "sentence_fourth": "Knock, knock, Neo."
         },
         "matrix": {
-            "enable": True, "cycle_number": 10000000, "threads_rate": 35, "bold_symbols_rate": 8, "min_speed": 2,
-            "max_speed": 6, "void_rate": 2, "digits": True, "symbols": True, "currencies": True, "greek": True,
-            "latin": True, "cyrillic": True, "chinese": True
+            "enable": True, "matrix_color": "GREEN", "cycle_number": 10000000, "threads_rate": 35,
+            "bold_symbols_rate": 8, "min_speed": 2, "max_speed": 6, "void_rate": 2, "digits": True,
+            "symbols": True, "currencies": True, "greek": True, "latin": True, "cyrillic": True, "chinese": True
+        },
+        "info": {
+            "enable": False, "info_color": "MAGENTA"
         }
     }
 
@@ -80,18 +83,15 @@ class Configuration:
             print(f'\nOSError! Failed to read file "{config_name}.json" due to {e}.')
 
     __slots__ = (
-        'variables', 'info', 'color', 'info_color', 'neo', 'neo_enable', 'neo_color', 'sentence_first',
-        'sentence_second', 'sentence_third', 'sentence_fourth', 'matrix', 'matrix_enable', 'cycle_number',
-        'threads_rate', 'bold_symbols_rate', 'min_speed', 'max_speed', 'void_rate', 'digits', 'symbols',
-        'currencies', 'greek', 'latin', 'cyrillic', 'chinese'
+        'variables', 'neo', 'neo_enable', 'neo_color', 'sentence_first', 'sentence_second', 'sentence_third',
+        'sentence_fourth', 'matrix', 'matrix_enable', 'matrix_color', 'cycle_number', 'threads_rate',
+        'bold_symbols_rate', 'min_speed', 'max_speed', 'void_rate', 'digits', 'symbols', 'currencies',
+        'greek', 'latin', 'cyrillic', 'chinese', 'info', 'info_enable', 'info_color'
     )
 
     def __init__(self):
-        self.variables = self.get_json_data('matrix_config')
+        self.variables = self.get_config_data('matrix_config')
         try:
-            self.info = self.variables['info']
-            self.color = self.variables['color']
-            self.info_color = self.variables['info_color']
             self.neo = self.variables['neo']
             self.neo_enable = self.neo['enable']
             self.neo_color = self.neo['neo_color']
@@ -101,6 +101,7 @@ class Configuration:
             self.sentence_fourth = self.neo['sentence_fourth']
             self.matrix = self.variables['matrix']
             self.matrix_enable = self.matrix['enable']
+            self.matrix_color = self.matrix['matrix_color']
             self.cycle_number = self.matrix['cycle_number']
             self.threads_rate = self.matrix['threads_rate']
             self.bold_symbols_rate = self.matrix['bold_symbols_rate']
@@ -114,6 +115,9 @@ class Configuration:
             self.latin = self.matrix['latin']
             self.cyrillic = self.matrix['cyrillic']
             self.chinese = self.matrix['chinese']
+            self.info = self.variables['info']
+            self.info_enable = self.info['enable']
+            self.info_color = self.info['info_color']
         except TypeError:
             print('\nTypeError! Variables can\'t be initialized!')
 

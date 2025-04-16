@@ -1,7 +1,4 @@
 {
-    "info": false,
-    "color": "GREEN",
-    "info_color": "MAGENTA",
     "neo": {
         "enable": true,
         "neo_color": "GREEN",
@@ -12,6 +9,7 @@
     },
     "matrix": {
         "enable": true,
+        "matrix_color": "GREEN",
         "cycle_number": 10000000,
         "threads_rate": 35,
         "bold_symbols_rate": 8,
@@ -25,5 +23,9 @@
         "latin": true,
         "cyrillic": true,
         "chinese": true
+    },
+    "info": {
+        "enable": false,
+        "info_color": "MAGENTA"
     }
 }

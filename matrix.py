@@ -52,7 +52,7 @@ class Matrix(Configuration):
         verify_a_bold = lambda: True if current_height % randint(3, self.bold_symbols_rate) == 0 else False
         return stdscr.addch(
             current_height, init_width, self.generate_symbol(*args),
-            self.paint(self.color, verify_a_bold())
+            self.paint(self.matrix_color, verify_a_bold())
         )
 
     def display_info(self, stdscr, init_speed: float, max_height: int, max_width: int) -> object:
@@ -66,7 +66,7 @@ class Matrix(Configuration):
 
         :return: object of curses
         """
-        if self.info:
+        if self.info_enable:
             try:
                 info_color = self.paint(self.info_color, False)
                 br, tr, isp, mh, mw = baudrate(), self.threads_rate, init_speed, max_height, max_width
@@ -82,17 +82,19 @@ class Matrix(Configuration):
         stdscr.addstr(0, 0, '')
 
     @staticmethod
-    def make_drop_height_random(current_height: int, max_height: int):
+    def make_drop_height_random(current_height: int, max_height: int) -> None:
         """
         The method determines if the drop height should be reset.
 
         :param current_height: current height of the symbol
         :param max_height: height of the screen
+
+        :raises error: If the drop height should be reset.
         """
         if current_height == randint(max_height // 3, max_height):
             raise error
 
-    def move_droplet_of_symbols(self, stdscr, current_height: int):
+    def move_droplet_of_symbols(self, stdscr, current_height: int) -> None:
         """
         The method moves the droplet of symbols down the screen.
 
@@ -121,7 +123,7 @@ class Matrix(Configuration):
                 init_width = choice([i for i in range(1, width - 1, 2)])
                 init_speed = float(f'{0.}{randint(self.min_speed, self.max_speed)}')
 
-    def make_threads_of_droplets(self):
+    def make_threads_of_droplets(self) -> None:
         """The method makes threads of droplets."""
         try:
             for _ in range(0, self.threads_rate):

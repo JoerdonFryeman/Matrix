@@ -22,7 +22,9 @@ class Neo(Configuration):
         }[counter_first]
         return dictionary()
 
-    def print_sentence(self, stdscr, sentence: list, counter_second: int, counter_first: int, symbol_color: object):
+    def print_sentence(
+            self, stdscr, sentence: list, counter_second: int, counter_first: int, symbol_color: object
+    ) -> None:
         """
         The method prints the sentence in the wrapper of the screen.
 
@@ -39,7 +41,7 @@ class Neo(Configuration):
             stdscr.addstr(2, 3, ''.join(sentence[0:counter_second]), symbol_color)
             stdscr.refresh()
 
-    def get_split_sentence(self, stdscr, counter_first: int, symbol_color: object):
+    def get_split_sentence(self, stdscr, counter_first: int, symbol_color: object) -> None:
         """
         The method splits separate sentences into a list of letters.
 
@@ -53,7 +55,7 @@ class Neo(Configuration):
             self.print_sentence(stdscr, [i for i in text], counter_second, counter_first, symbol_color)
             sleep(float(4))
 
-    def wake_up_neo(self, stdscr):
+    def wake_up_neo(self, stdscr) -> None:
         """
         The method takes a list of words and return as a printed input.
         :param stdscr: initscr

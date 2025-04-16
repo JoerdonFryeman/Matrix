@@ -2,9 +2,7 @@ from time import sleep
 from random import randint, choice
 from threading import Thread, Lock
 
-from configuration import (
-    Configuration, wrapper, error, curs_set, baudrate, init_pair, use_default_colors, color_pair, A_BOLD
-)
+from configuration import Configuration, wrapper, error, curs_set, baudrate
 
 
 class Matrix(Configuration):
@@ -36,19 +34,6 @@ class Matrix(Configuration):
         ]
         return choice(symbol_list)
 
-    def get_color(self, current_height: int) -> int:
-        """
-        The method returns color of the random symbol
-
-        :param current_height: current height of the symbol
-        :return: value of color
-        """
-        use_default_colors(), init_pair(1, self.verify_color(), -1)
-        symbol_color = color_pair(1)
-        if current_height % randint(3, self.bold_symbols_rate) == 0:
-            return symbol_color | A_BOLD
-        return symbol_color
-
     def draw_symbol(self, stdscr, current_height: int, init_width: int, switch: int, *args: bool) -> object:
         """
         The method draws a random symbol on the screen at specified position.
@@ -64,7 +49,11 @@ class Matrix(Configuration):
         curs_set(False)
         if switch == 0:
             return stdscr.addch(current_height, init_width, ' ')
-        return stdscr.addch(current_height, init_width, self.generate_symbol(*args), self.get_color(current_height))
+        verify_a_bold = lambda: True if current_height % randint(3, self.bold_symbols_rate) == 0 else False
+        return stdscr.addch(
+            current_height, init_width, self.generate_symbol(*args),
+            self.paint(self.color, verify_a_bold())
+        )
 
     def display_info(self, stdscr, init_speed: float, max_height: int, max_width: int) -> object:
         """
@@ -79,13 +68,14 @@ class Matrix(Configuration):
         """
         if self.info:
             try:
+                info_color = self.paint(self.info_color, False)
                 br, tr, isp, mh, mw = baudrate(), self.threads_rate, init_speed, max_height, max_width
                 link = 'https://github.com/JoerdonFryeman/Matrix'
                 stdscr.addstr(10, 34, f'{" " * 47}')
-                stdscr.addstr(11, 34, f'{" " * 4}{br} | {tr} | {isp} | {mh}x{mw}{" " * 17}', self.verify_color())
-                stdscr.addstr(12, 34, f'{" " * 4}Matrix (version 1.0.5) | ЭЛЕКТРОНИКА 54{" " * 4}', self.verify_color())
-                stdscr.addstr(13, 34, f'{" " * 4}MIT License, (c) 2025 JoerdonFryeman{" " * 7}', self.verify_color())
-                stdscr.addstr(14, 34, f'{" " * 4}{link}{" " * 3}', self.verify_color())
+                stdscr.addstr(11, 34, f'{" " * 4}{br} | {tr} | {isp} | {mh}x{mw}{" " * 17}', info_color)
+                stdscr.addstr(12, 34, f'{" " * 4}Matrix (version 1.0.6) | ЭЛЕКТРОНИКА 54{" " * 4}', info_color)
+                stdscr.addstr(13, 34, f'{" " * 4}MIT License, (c) 2025 JoerdonFryeman{" " * 7}', info_color)
+                stdscr.addstr(14, 34, f'{" " * 4}{link}{" " * 3}', info_color)
                 stdscr.addstr(15, 34, f'{" " * 47}')
             except error:
                 pass
@@ -112,22 +102,23 @@ class Matrix(Configuration):
         init_width, switch = 1, randint(0, 1)
         init_speed = float(f'{0.}{randint(self.min_speed, self.max_speed)}')
         for _ in range(self.cycle_number):
-            max_height, max_width = stdscr.getmaxyx()
+            height, width = stdscr.getmaxyx()
             try:
                 with self.locker:
-                    self.make_drop_height_random(current_height, max_height)
+                    self.make_drop_height_random(current_height, height)
                     stdscr.addstr(current_height, init_width, ' ' * randint(0, self.void_rate))
                     self.draw_symbol(
                         stdscr, current_height, init_width, switch, self.digits, self.symbols,
                         self.currencies, self.greek, self.latin, self.cyrillic, self.chinese
                     )
-                    self.display_info(stdscr, init_speed, max_height, max_width)
+                    if width >= 78:
+                        self.display_info(stdscr, init_speed, height, width)
                     stdscr.refresh()
                     current_height += 1
                 sleep(init_speed)
             except error:
                 current_height = self.init_height
-                init_width = choice([i for i in range(1, max_width - 1, 2)])
+                init_width = choice([i for i in range(1, width - 1, 2)])
                 init_speed = float(f'{0.}{randint(self.min_speed, self.max_speed)}')
 
     def make_threads_of_droplets(self):

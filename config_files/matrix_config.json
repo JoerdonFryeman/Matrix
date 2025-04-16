@@ -1,8 +1,10 @@
 {
     "info": false,
     "color": "GREEN",
+    "info_color": "MAGENTA",
     "neo": {
         "enable": true,
+        "neo_color": "GREEN",
         "sentence_first": "Wake up, Neo...",
         "sentence_second": "The Matrix has you...",
         "sentence_third": "Follow the white rabbit.",

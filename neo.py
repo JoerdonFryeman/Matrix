@@ -1,7 +1,7 @@
 from time import sleep
 from random import randint
 
-from configuration import init_pair, use_default_colors, color_pair, wrapper, Configuration
+from configuration import Configuration, wrapper
 
 
 class Neo(Configuration):
@@ -22,7 +22,7 @@ class Neo(Configuration):
         }[counter_first]
         return dictionary()
 
-    def print_sentence(self, stdscr, sentence: list, counter_second: int, counter_first: int, symbol_color: int):
+    def print_sentence(self, stdscr, sentence: list, counter_second: int, counter_first: int, symbol_color: object):
         """
         The method prints the sentence in the wrapper of the screen.
 
@@ -30,7 +30,7 @@ class Neo(Configuration):
         :param sentence: text
         :param counter_second: value of counter second
         :param counter_first: value of counter first
-        :param symbol_color: value of color pair
+        :param symbol_color: Объект color_pair
         """
         for i in range(len(sentence)):
             counter_second += 1
@@ -39,13 +39,13 @@ class Neo(Configuration):
             stdscr.addstr(2, 3, ''.join(sentence[0:counter_second]), symbol_color)
             stdscr.refresh()
 
-    def get_split_sentence(self, stdscr, counter_first: int, symbol_color: int):
+    def get_split_sentence(self, stdscr, counter_first: int, symbol_color: object):
         """
         The method splits separate sentences into a list of letters.
 
         :param stdscr: initscr
         :param counter_first: value of counter first
-        :param symbol_color: value of color pair
+        :param symbol_color: Объект color_pair
         """
         for text in (self.sentence_first, self.sentence_second, self.sentence_third):
             counter_first += 1
@@ -56,11 +56,9 @@ class Neo(Configuration):
     def wake_up_neo(self, stdscr):
         """
         The method takes a list of words and return as a printed input.
-
         :param stdscr: initscr
         """
-        use_default_colors(), init_pair(1, self.verify_color(), -1)
-        symbol_color = color_pair(1)
+        symbol_color = self.paint(self.neo_color, False)
         counter_first = 0
         self.get_split_sentence(stdscr, counter_first, symbol_color)
         stdscr.clear()
@@ -72,7 +70,6 @@ class Neo(Configuration):
     def get_neo_wrapper(self) -> object:
         """
         The method returns wrapper of the screen.
-
         :return: wrapper
         """
         return wrapper(self.wake_up_neo)

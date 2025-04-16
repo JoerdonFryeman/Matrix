@@ -2,7 +2,7 @@
 
 Your personal green rain of code in a Linux or Windows console!
 
-![Matrix](https://github.com/user-attachments/assets/f7948a4c-109f-4d6e-912f-dd921cc5fac8)
+![Matrix](https://github.com/user-attachments/assets/0205d545-ab4f-415b-809e-d95d0bebfed3)
 
 ## Project structure
 
@@ -60,7 +60,7 @@ Some program settings can be specified in the matrix_config.json file.
 
 ![matrix_colors](https://github.com/user-attachments/assets/6da55b9c-defb-41be-891d-7165047a3b04)
 
-- Change the color of rain: BLACK, BLUE, CYAN, GREEN, MAGENTA, RED, WHITE, YELLOW.
+- Change the color of symbols: BLACK, BLUE, CYAN, GREEN, MAGENTA, RED, WHITE, YELLOW.
 - Enable or disable info mode, matrix or neo modules.
 - Write your own sentences for example: "Fall asleep, Neo...".
 - You can also choose the rate of threads, voids or symbols and speed of rain.

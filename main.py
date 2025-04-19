@@ -16,6 +16,8 @@ def main() -> None:
             print('\nNeo and matrix modules are disabled, what else do you want to see here?\n')
     except AttributeError:
         print('\nAttributeError! You need to restart the program!\n')
+    except Exception as error:
+        print(f'The check came back with an error: {error}')
 
 
 if __name__ == '__main__':

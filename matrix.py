@@ -2,10 +2,11 @@ from time import sleep
 from random import randint, choice
 from threading import Thread, Lock
 
-from configuration import Configuration, wrapper, error, curs_set, baudrate
+from base import Base
+from configuration import wrapper, error, curs_set, baudrate
 
 
-class Matrix(Configuration):
+class Matrix(Base):
     """The Matrix class is utilized for performing various symbol operations,"""
 
     __slots__ = ('init_height', 'locker')
@@ -73,7 +74,7 @@ class Matrix(Configuration):
                 link = 'https://github.com/JoerdonFryeman/Matrix'
                 stdscr.addstr(10, 34, f'{" " * 47}')
                 stdscr.addstr(11, 34, f'{" " * 4}{br} | {tr} | {isp} | {mh}x{mw}{" " * 17}', info_color)
-                stdscr.addstr(12, 34, f'{" " * 4}Matrix (version 1.0.6) | ЭЛЕКТРОНИКА 54{" " * 4}', info_color)
+                stdscr.addstr(12, 34, f'{" " * 4}Matrix (version 1.0.7) | ЭЛЕКТРОНИКА 54{" " * 4}', info_color)
                 stdscr.addstr(13, 34, f'{" " * 4}MIT License, (c) 2025 JoerdonFryeman{" " * 7}', info_color)
                 stdscr.addstr(14, 34, f'{" " * 4}{link}{" " * 3}', info_color)
                 stdscr.addstr(15, 34, f'{" " * 47}')

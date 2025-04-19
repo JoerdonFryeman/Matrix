@@ -1,10 +1,11 @@
 from time import sleep
 from random import randint
 
-from configuration import Configuration, wrapper
+from base import Base
+from configuration import wrapper
 
 
-class Neo(Configuration):
+class Neo(Base):
     """The Neo class provides specific functionalities for displaying and animating sentences on a screen."""
 
     @staticmethod

@@ -8,9 +8,9 @@ try:
         COLOR_BLACK, COLOR_BLUE, COLOR_CYAN, COLOR_GREEN, COLOR_MAGENTA, COLOR_RED, COLOR_WHITE, COLOR_YELLOW
     )
 except ModuleNotFoundError:
-    print('\nДля работы программы необходимо установить модуль curses!\n')
+    print('\nFor the program to work, you need to install the curses module!\n')
 
-directories = ('config_files', 'icons')
+directories: tuple[str, str] = ('config_files', 'icons')
 for directory in directories:
     try:
         os.mkdir(directory)
@@ -21,7 +21,7 @@ for directory in directories:
 class Configuration:
     """The Configuration class is used for reading and managing configuration settings from a JSON file."""
 
-    matrix_config = {
+    matrix_config: dict[str, dict[str, bool | str] | dict[str, bool | str | int]] = {
         "neo": {
             "enable": True, "neo_color": "GREEN", "sentence_first": "Wake up, Neo...",
             "sentence_second": "The Matrix has you...", "sentence_third": "Follow the white rabbit.",
@@ -55,16 +55,16 @@ class Configuration:
             print(f'\nFailed to create file "{config_name}.json" due to {e}')
 
     @staticmethod
-    def get_json_data(config_name: str):
+    def get_json_data(config_name: str) -> dict[str, dict[str, str | bool | int]]:
         """
         The method reads a JSON configuration file.
         :param config_name: Name of the configuration file (without .json extension).
         """
         with open(f'config_files/{config_name}.json', encoding='UTF-8') as read_file:
-            data = load(read_file)
+            data: dict[str, dict[str, str | bool | int]] = load(read_file)
         return data
 
-    def get_config_data(self, config_name: str) -> dict | None:
+    def get_config_data(self, config_name: str) -> dict[str, dict[str, str | bool | int]] | None:
         """
         The method tries to read the configuration file and, if it fails, overwrites it.
 
@@ -74,13 +74,14 @@ class Configuration:
         try:
             return self.get_json_data(config_name)
         except FileNotFoundError:
-            print(f'\nFileNotFoundError! File {config_name}.json not found!')
             self.write_json_data(config_name, self.matrix_config)
             return self.matrix_config
         except JSONDecodeError:
             print(f'\nJSONDecodeError! File "{config_name}.json" is corrupted or not a valid JSON!')
+            return None
         except OSError as e:
             print(f'\nOSError! Failed to read file "{config_name}.json" due to {e}.')
+            return None
 
     __slots__ = (
         'variables', 'neo', 'neo_enable', 'neo_color', 'sentence_first', 'sentence_second', 'sentence_third',
@@ -90,68 +91,33 @@ class Configuration:
     )
 
     def __init__(self):
-        self.variables = self.get_config_data('matrix_config')
+        self.variables: dict[str, dict[str, str | bool | int]] = self.get_config_data('matrix_config')
         try:
-            self.neo = self.variables['neo']
-            self.neo_enable = self.neo['enable']
-            self.neo_color = self.neo['neo_color']
-            self.sentence_first = self.neo['sentence_first']
-            self.sentence_second = self.neo['sentence_second']
-            self.sentence_third = self.neo['sentence_third']
-            self.sentence_fourth = self.neo['sentence_fourth']
-            self.matrix = self.variables['matrix']
-            self.matrix_enable = self.matrix['enable']
-            self.matrix_color = self.matrix['matrix_color']
-            self.cycle_number = self.matrix['cycle_number']
-            self.threads_rate = self.matrix['threads_rate']
-            self.bold_symbols_rate = self.matrix['bold_symbols_rate']
-            self.min_speed = self.matrix['min_speed']
-            self.max_speed = self.matrix['max_speed']
-            self.void_rate = self.matrix['void_rate']
-            self.digits = self.matrix['digits']
-            self.symbols = self.matrix['symbols']
-            self.currencies = self.matrix['currencies']
-            self.greek = self.matrix['greek']
-            self.latin = self.matrix['latin']
-            self.cyrillic = self.matrix['cyrillic']
-            self.chinese = self.matrix['chinese']
-            self.info = self.variables['info']
-            self.info_enable = self.info['enable']
-            self.info_color = self.info['info_color']
+            self.neo: dict[str, str | bool | int] = self.variables['neo']
+            self.neo_enable: str | bool | int = self.neo['enable']
+            self.neo_color: str | bool | int = self.neo['neo_color']
+            self.sentence_first: str | bool | int = self.neo['sentence_first']
+            self.sentence_second: str | bool | int = self.neo['sentence_second']
+            self.sentence_third: str | bool | int = self.neo['sentence_third']
+            self.sentence_fourth: str | bool | int = self.neo['sentence_fourth']
+            self.matrix: dict[str, str | bool | int] = self.variables['matrix']
+            self.matrix_enable: str | bool | int = self.matrix['enable']
+            self.matrix_color: str | bool | int = self.matrix['matrix_color']
+            self.cycle_number: str | bool | int = self.matrix['cycle_number']
+            self.threads_rate: str | bool | int = self.matrix['threads_rate']
+            self.bold_symbols_rate: str | bool | int = self.matrix['bold_symbols_rate']
+            self.min_speed: str | bool | int = self.matrix['min_speed']
+            self.max_speed: str | bool | int = self.matrix['max_speed']
+            self.void_rate: str | bool | int = self.matrix['void_rate']
+            self.digits: str | bool | int = self.matrix['digits']
+            self.symbols: str | bool | int = self.matrix['symbols']
+            self.currencies: str | bool | int = self.matrix['currencies']
+            self.greek: str | bool | int = self.matrix['greek']
+            self.latin: str | bool | int = self.matrix['latin']
+            self.cyrillic: str | bool | int = self.matrix['cyrillic']
+            self.chinese: str | bool | int = self.matrix['chinese']
+            self.info: dict[str, str | bool | int] = self.variables['info']
+            self.info_enable: str | bool | int = self.info['enable']
+            self.info_color: str | bool | int = self.info['info_color']
         except TypeError:
             print('\nTypeError! Variables can\'t be initialized!')
-
-    @staticmethod
-    def verify_color(color):
-        """
-        The method checks the color setting from the configuration.
-        :return: COLOR_*: The color constant corresponding to the color configuration.
-        """
-        color_map = {
-            'BLACK': COLOR_BLACK, 'BLUE': COLOR_BLUE, 'CYAN': COLOR_CYAN, 'GREEN': COLOR_GREEN,
-            'MAGENTA': COLOR_MAGENTA, 'RED': COLOR_RED, 'WHITE': COLOR_WHITE, 'YELLOW': COLOR_YELLOW,
-        }
-        return color_map.get(color, COLOR_WHITE)
-
-    def paint(self, color: str, a_bold: bool) -> object:
-        """
-        Method colors text or text image.
-
-        :param color: The color of the image.
-        :param a_bold: A bold symbol true or false
-
-        :return: Color_pair object.
-        :raises KeyError: If the specified color is not found in the color dictionary.
-        """
-        colors_dict: dict[str, int] = {
-            'MAGENTA': 1, 'BLUE': 2, 'CYAN': 3, 'GREEN': 4,
-            'YELLOW': 5, 'RED': 6, 'WHITE': 7, 'BLACK': 8
-        }
-        if color not in colors_dict:
-            raise KeyError(f'Цвет "{color}" не найден в доступных цветах.')
-        for i, color_name in enumerate(colors_dict.keys()):
-            use_default_colors()
-            init_pair(1 + i, self.verify_color(color_name), -1)
-        if a_bold:
-            return color_pair(colors_dict[color]) | A_BOLD
-        return color_pair(colors_dict[color])

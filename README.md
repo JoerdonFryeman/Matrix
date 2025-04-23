@@ -2,20 +2,21 @@
 
 Your personal green rain of code in a Linux or Windows console!
 
-![Matrix](https://github.com/user-attachments/assets/0205d545-ab4f-415b-809e-d95d0bebfed3)
+![Matrix](https://github.com/user-attachments/assets/7ce3e61b-2871-4c82-a97f-83d22d86b06b)
 
 ## Project structure
 
 - `main.py`: The main module to run the program.
 - `matrix.py`: Matrix symbol generation and animation module.
 - `neo.py`: The module of generation and animation of symbols of the program “Neo”.
+- `base`: Base module for all modules.
 - `configuration.py`: Module for loading program configuration data.
 - `matrix_config.json`: Program settings and configuration file.
 
 ## Requirements
 
-- Python 3.12
-- windows-curses 2.3.3 (for Windows)
+- Python 3.13
+- windows-curses 2.4.1a1 (for Windows)
 - The application was developed for Arch Linux with the KDE Plasma desktop environment, but should work in other distributions as well as with limitations in Windows.
 
 ## Installation

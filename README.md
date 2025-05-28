@@ -30,6 +30,7 @@ cd /home/your_directories.../Matrix_v1.0.7/Linux/ && ./Matrix_v1.0.7.app
 ## Installation
 
 Download the project
+
 ``` console
 git clone https://github.com/JoerdonFryeman/Matrix
 cd Matrix
@@ -45,11 +46,14 @@ python3 main.py
 ### For Windows
 
 Create and activate a virtual environment
+
 ``` console
 python -m venv venv
 venv\Scripts\activate
 ```
+
 Install the requirements and run the script
+
 ``` console
 python.exe -m pip install --upgrade pip
 pip install -r requirements_for_windows.txt

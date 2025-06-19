@@ -24,16 +24,16 @@ class Matrix(Base):
         :param args: bool
         :return: symbol
         """
-        symbol_list = [
-            *[i for i in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9') if args[0]],
-            *[i for i in ('!', '@', '#', '%', '&', '§', '№', '~', '/', '?') if args[1]],
-            *[i for i in ('₿', '₽', '€', '$', '₩', 'ƒ', '¥', '₹', '₫', '£') if args[2]],
-            *[i for i in ('π', 'λ', 'β', 'γ', 'Ω', 'θ', 'Σ', 'Ψ', 'ξ', 'ω') if args[3]],
-            *[i for i in ('X', 'Y', 'Z', 'x', 'y', 'z', 'r', 'd', 'f', 'l') if args[4]],
-            *[i for i in ('Ё', 'ё', 'Э', 'э', 'Ф', 'ф', 'Ъ', 'ъ', 'Я', 'я') if args[5]],
-            *[i for i in ('小', '西', '体', '人', '里', '是', '永', '甲', '字', '书') if args[6]],
-        ]
-        return choice(symbol_list)
+        generated_symbol = (
+            *(i for i in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9') if args[0]),
+            *(i for i in ('!', '@', '#', '%', '&', '§', '№', '~', '/', '?') if args[1]),
+            *(i for i in ('₿', '₽', '€', '$', '₩', 'ƒ', '¥', '₹', '₫', '£') if args[2]),
+            *(i for i in ('π', 'λ', 'β', 'γ', 'Ω', 'θ', 'Σ', 'Ψ', 'ξ', 'ω') if args[3]),
+            *(i for i in ('X', 'Y', 'Z', 'x', 'y', 'z', 'r', 'd', 'f', 'l') if args[4]),
+            *(i for i in ('Ё', 'ё', 'Э', 'э', 'Ф', 'ф', 'Ъ', 'ъ', 'Я', 'я') if args[5]),
+            *(i for i in ('小', '西', '体', '人', '里', '是', '永', '甲', '字', '书') if args[6])
+        )
+        return choice(generated_symbol)
 
     def draw_symbol(self, stdscr, current_height: int, init_width: int, switch: int, *args: bool) -> object:
         """

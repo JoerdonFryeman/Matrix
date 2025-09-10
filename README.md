@@ -5,12 +5,12 @@ Your personal green rain of code in a Linux or Windows console!
 ![Matrix](https://github.com/user-attachments/assets/7ce3e61b-2871-4c82-a97f-83d22d86b06b)
 
 ## Startup
-- Download [latest release](https://github.com/JoerdonFryeman/Matrix/releases/tag/Matrix_v1.0.7).
-- In Linux, run ```Matrix_v1.0.7.app``` in the terminal or with the command:
+- Download [latest release](https://github.com/JoerdonFryeman/Matrix/releases/tag/Matrix_v1.0.8).
+- In Linux, run ```Matrix_v1.0.8.app``` in the terminal or with the command:
 ```console
-cd /home/your_directories.../Matrix_v1.0.7/Linux/ && ./Matrix_v1.0.7.app
+cd /home/your_directories.../Matrix_v1.0.8/Linux/ && ./Matrix_v1.0.8.app
 ```
-- In Windows, run ```Matrix_v1.0.7.exe```
+- In Windows, run ```Matrix_v1.0.8.exe```
 
 ## Project structure
 

@@ -31,7 +31,7 @@ class Matrix(Base):
             *(i for i in ('π', 'λ', 'β', 'γ', 'Ω', 'θ', 'Σ', 'Ψ', 'ξ', 'ω') if args[3]),
             *(i for i in ('X', 'Y', 'Z', 'x', 'y', 'z', 'r', 'd', 'f', 'l') if args[4]),
             *(i for i in ('Ё', 'ё', 'Э', 'э', 'Ф', 'ф', 'Ъ', 'ъ', 'Я', 'я') if args[5]),
-            *(i for i in ('小', '西', '体', '人', '里', '是', '永', '甲', '字', '书') if args[6])
+            *(i for i in ('小', '凡', '体', '人', '里', '是', '永', '甲', '字', '书') if args[6])
         )
         return choice(generated_symbol)
 
@@ -74,7 +74,7 @@ class Matrix(Base):
                 link = 'https://github.com/JoerdonFryeman/Matrix'
                 stdscr.addstr(10, 34, f'{" " * 47}')
                 stdscr.addstr(11, 34, f'{" " * 4}{br} | {tr} | {isp} | {mh}x{mw}{" " * 17}', info_color)
-                stdscr.addstr(12, 34, f'{" " * 4}Matrix (version 1.0.7) | ЭЛЕКТРОНИКА 54{" " * 4}', info_color)
+                stdscr.addstr(12, 34, f'{" " * 4}Matrix (version 1.0.9) | ЭЛЕКТРОНИКА 54{" " * 4}', info_color)
                 stdscr.addstr(13, 34, f'{" " * 4}MIT License, (c) 2025 JoerdonFryeman{" " * 7}', info_color)
                 stdscr.addstr(14, 34, f'{" " * 4}{link}{" " * 3}', info_color)
                 stdscr.addstr(15, 34, f'{" " * 47}')

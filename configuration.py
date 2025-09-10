@@ -1,5 +1,4 @@
 import os
-from io import TextIOWrapper
 from json import load, dump, JSONDecodeError
 
 try:
@@ -11,9 +10,9 @@ except ModuleNotFoundError:
     print('\nFor the program to work, you need to install the curses module!\n')
 
 directories: tuple[str, str] = ('config_files', 'icons')
-for directory in directories:
+for d in directories:
     try:
-        os.mkdir(directory)
+        os.mkdir(d)
     except FileExistsError:
         pass
 
@@ -38,31 +37,48 @@ class Configuration:
     }
 
     @staticmethod
-    def write_json_data(config_name: str, json_data: dict) -> None:
+    def get_json_data(directory: str, name: str) -> dict | None:
+        """
+        The method reads a JSON configuration file.
+
+        :param directory: directory of the configuration file.
+        :param name: Name of the configuration file (without .json extension).
+        """
+        file_path = os.path.join(directory, f'{name}.json')
+        try:
+            with open(file_path, encoding='UTF-8') as json_file:
+                data = load(json_file)
+            return data
+        except FileExistsError:
+            pass
+        except FileNotFoundError:
+            raise FileNotFoundError(f'Файл не найден: {file_path}')
+        except JSONDecodeError:
+            raise ValueError(f'Ошибка декодирования JSON в файле: {file_path}')
+        except PermissionError:
+            raise PermissionError(f'Нет доступа к файлу: {file_path}')
+        except Exception as e:
+            raise Exception(f'Произошла ошибка: {str(e)}')
+
+    @staticmethod
+    def save_json_data(directory: str, name: str, data: list | dict) -> None:
         """
         The method creates a new default configuration file if the specified JSON file does not exist.
 
-        :param config_name: Name of the configuration file (without .json extension).
-        :param json_data: The data to be written as a dictionary.
+        :param directory: directory of the configuration file.
+        :param name: Name of the configuration file (without .json extension).
+        :param data: The data to be written as a dictionary.
         """
+        file_path = os.path.join(directory, f'{name}.json')
         try:
-            with open(f'config_files/{config_name}.json', 'x', encoding='UTF-8') as write_file:
-                assert isinstance(write_file, TextIOWrapper)
-                dump(json_data, write_file, ensure_ascii=False, indent=4)
-        except FileExistsError:
-            pass
-        except OSError as e:
-            print(f'\nFailed to create file "{config_name}.json" due to {e}')
-
-    @staticmethod
-    def get_json_data(config_name: str) -> dict[str, dict[str, str | bool | int]]:
-        """
-        The method reads a JSON configuration file.
-        :param config_name: Name of the configuration file (without .json extension).
-        """
-        with open(f'config_files/{config_name}.json', encoding='UTF-8') as read_file:
-            data: dict[str, dict[str, str | bool | int]] = load(read_file)
-        return data
+            with open(file_path, 'w', encoding='UTF-8') as json_file:
+                dump(data, json_file, ensure_ascii=False, indent=4)
+        except PermissionError:
+            raise PermissionError(f'Нет доступа для записи в файл: {file_path}')
+        except IOError as e:
+            raise IOError(f'Ошибка записи в файл: {file_path}. Причина: {str(e)}')
+        except Exception as e:
+            raise Exception(f'Произошла ошибка: {str(e)}')
 
     def get_config_data(self, config_name: str) -> dict[str, dict[str, str | bool | int]] | None:
         """
@@ -72,9 +88,9 @@ class Configuration:
         :return dict: The configuration data loaded from the JSON file.
         """
         try:
-            return self.get_json_data(config_name)
+            return self.get_json_data('config_files/', config_name)
         except FileNotFoundError:
-            self.write_json_data(config_name, self.matrix_config)
+            self.save_json_data('config_files/', config_name, self.matrix_config)
             return self.matrix_config
         except JSONDecodeError:
             print(f'\nJSONDecodeError! File "{config_name}.json" is corrupted or not a valid JSON!')

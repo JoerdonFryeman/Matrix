@@ -13,8 +13,9 @@ class Matrix(Base):
 
     def __init__(self):
         super().__init__()
-        self.init_height = 0
+        self.init_height: int = 0
         self.locker = Lock()
+        self.running: bool = True
 
     @staticmethod
     def generate_symbol(*args: bool) -> str:
@@ -74,8 +75,8 @@ class Matrix(Base):
                 link = 'https://github.com/JoerdonFryeman/Matrix'
                 stdscr.addstr(10, 34, f'{" " * 47}')
                 stdscr.addstr(11, 34, f'{" " * 4}{br} | {tr} | {isp} | {mh}x{mw}{" " * 17}', info_color)
-                stdscr.addstr(12, 34, f'{" " * 4}Matrix (version 1.0.9) | ЭЛЕКТРОНИКА 54{" " * 4}', info_color)
-                stdscr.addstr(13, 34, f'{" " * 4}MIT License, (c) 2025 JoerdonFryeman{" " * 7}', info_color)
+                stdscr.addstr(12, 34, f'{" " * 4}Matrix (version 1.1.0) | ЭЛЕКТРОНИКА 54{" " * 4}', info_color)
+                stdscr.addstr(13, 34, f'{" " * 4}MIT License, (c) 2026 JoerdonFryeman{" " * 7}', info_color)
                 stdscr.addstr(14, 34, f'{" " * 4}{link}{" " * 3}', info_color)
                 stdscr.addstr(15, 34, f'{" " * 47}')
             except error:
@@ -104,7 +105,7 @@ class Matrix(Base):
         """
         init_width, switch = 1, randint(0, 1)
         init_speed = float(f'{0.}{randint(self.min_speed, self.max_speed)}')
-        for _ in range(self.cycle_number):
+        while self.running:
             height, width = stdscr.getmaxyx()
             try:
                 with self.locker:
@@ -124,10 +125,32 @@ class Matrix(Base):
                 init_width = choice([i for i in range(1, width - 1, 2)])
                 init_speed = float(f'{0.}{randint(self.min_speed, self.max_speed)}')
 
-    def make_threads_of_droplets(self) -> None:
-        """The method makes threads of droplets."""
+    def _wait_for_enter(self, stdscr) -> None:
+        """Block on a curses window until a key is pressed, then stop the animation."""
+        stdscr.nodelay(False)
+        stdscr.getch()
+        self.running: bool = False
+        stdscr.clear()
+
+    def _safe_wrapper_wait(self):
+        """Run _wait_for_enter under curses.wrapper and ignore curses errors."""
         try:
-            for _ in range(0, self.threads_rate):
-                Thread(target=wrapper, args=(self.move_droplet_of_symbols, self.init_height)).start()
+            wrapper(self._wait_for_enter)
         except error:
             pass
+
+    def _safe_wrapper_move(self, init_h: int):
+        """
+        Run move_droplet_of_symbols under curses.wrapper and ignore curses errors.
+        :param init_h: initial height to pass to move_droplet_of_symbols.
+        """
+        try:
+            wrapper(self.move_droplet_of_symbols, init_h)
+        except error:
+            pass
+
+    def make_threads_of_droplets(self) -> None:
+        """The method makes threads of droplets."""
+        Thread(target=self._safe_wrapper_wait).start()
+        for _ in range(self.threads_rate):
+            Thread(target=self._safe_wrapper_move, args=(self.init_height,)).start()

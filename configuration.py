@@ -27,7 +27,7 @@ class Configuration:
             "sentence_fourth": "Knock, knock, Neo."
         },
         "matrix": {
-            "enable": True, "matrix_color": "GREEN", "cycle_number": 10000000, "threads_rate": 35,
+            "enable": True, "matrix_color": "GREEN", "threads_rate": 35,
             "bold_symbols_rate": 8, "min_speed": 2, "max_speed": 6, "void_rate": 2, "digits": True,
             "symbols": True, "currencies": True, "greek": True, "latin": True, "cyrillic": True, "chinese": True
         },
@@ -88,9 +88,9 @@ class Configuration:
         :return dict: The configuration data loaded from the JSON file.
         """
         try:
-            return self.get_json_data('config_files/', config_name)
+            return self.get_json_data('config_files', config_name)
         except FileNotFoundError:
-            self.save_json_data('config_files/', config_name, self.matrix_config)
+            self.save_json_data('config_files', config_name, self.matrix_config)
             return self.matrix_config
         except JSONDecodeError:
             print(f'\nJSONDecodeError! File "{config_name}.json" is corrupted or not a valid JSON!')
@@ -101,7 +101,7 @@ class Configuration:
 
     __slots__ = (
         'variables', 'neo', 'neo_enable', 'neo_color', 'sentence_first', 'sentence_second', 'sentence_third',
-        'sentence_fourth', 'matrix', 'matrix_enable', 'matrix_color', 'cycle_number', 'threads_rate',
+        'sentence_fourth', 'matrix', 'matrix_enable', 'matrix_color', 'threads_rate',
         'bold_symbols_rate', 'min_speed', 'max_speed', 'void_rate', 'digits', 'symbols', 'currencies',
         'greek', 'latin', 'cyrillic', 'chinese', 'info', 'info_enable', 'info_color'
     )
@@ -119,7 +119,6 @@ class Configuration:
             self.matrix: dict[str, str | bool | int] = self.variables['matrix']
             self.matrix_enable: str | bool | int = self.matrix['enable']
             self.matrix_color: str | bool | int = self.matrix['matrix_color']
-            self.cycle_number: str | bool | int = self.matrix['cycle_number']
             self.threads_rate: str | bool | int = self.matrix['threads_rate']
             self.bold_symbols_rate: str | bool | int = self.matrix['bold_symbols_rate']
             self.min_speed: str | bool | int = self.matrix['min_speed']

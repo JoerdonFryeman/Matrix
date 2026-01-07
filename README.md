@@ -67,6 +67,10 @@ You can start the project in your console
 python3 main.py
 ```
 
+## Stop
+
+Just press Enter or try any other key
+
 ## Settings
 
 Some program settings can be specified in the matrix_config.json file.

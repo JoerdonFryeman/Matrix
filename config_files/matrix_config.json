@@ -10,7 +10,6 @@
     "matrix": {
         "enable": true,
         "matrix_color": "GREEN",
-        "cycle_number": 10000000,
         "threads_rate": 35,
         "bold_symbols_rate": 8,
         "min_speed": 2,

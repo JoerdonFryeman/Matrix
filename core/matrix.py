@@ -9,7 +9,7 @@ from configuration import wrapper, error, curs_set, baudrate
 class Matrix(Base):
     """The Matrix class is utilized for performing various symbol operations,"""
 
-    __slots__ = ('init_height', 'locker')
+    __slots__ = ('init_height', 'locker', 'running')
 
     def __init__(self):
         super().__init__()

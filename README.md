@@ -12,6 +12,23 @@ cd /home/your_directories.../Matrix_v1.0.9/Linux/ && ./Matrix_v1.0.9.app
 ```
 - In Windows, run ```Matrix_v1.0.9.exe```
 
+## Docker
+
+[![Docker Pulls](https://img.shields.io/docker/pulls/joerdonfryeman/matrix)](https://hub.docker.com/r/joerdonfryeman/matrix)
+[![Docker Image Version (latest semver)](https://img.shields.io/docker/v/joerdonfryeman/matrix?label=docker%20hub)](https://hub.docker.com/r/joerdonfryeman/matrix)
+
+Run the image attached to the standard input/output streams:
+
+```console
+docker run -it joerdonfryeman/matrix:1.1.0
+```
+
+Alternative (clarifies intent; second command corrected):
+
+```console
+docker run --rm -it joerdonfryeman/matrix:1.1.0
+```
+
 ## Project structure
 
 - `main.py`: The main module to run the program.

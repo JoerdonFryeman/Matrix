@@ -5,17 +5,22 @@ Your personal green rain of code in a Linux or Windows console!
 ![Matrix](https://github.com/user-attachments/assets/7ce3e61b-2871-4c82-a97f-83d22d86b06b)
 
 ## Startup
-- Download [latest release](https://github.com/JoerdonFryeman/Matrix/releases/tag/Matrix_v1.0.9).
-- In Linux, run ```Matrix_v1.0.9.app``` in the terminal or with the command:
+Download [latest release](https://github.com/JoerdonFryeman/Matrix/releases/tag/Matrix_v1.0.9).
+In Linux, run ```Matrix_v1.0.9.app``` in the terminal or with the command:
 ```console
 cd /home/your_directories.../Matrix_v1.0.9/Linux/ && ./Matrix_v1.0.9.app
 ```
-- In Windows, run ```Matrix_v1.0.9.exe```
+In Windows, run ```Matrix_v1.0.9.exe```
 
 ## Docker
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/joerdonfryeman/matrix)](https://hub.docker.com/r/joerdonfryeman/matrix)
-[![Docker Image Version (latest semver)](https://img.shields.io/docker/v/joerdonfryeman/matrix?label=docker%20hub)](https://hub.docker.com/r/joerdonfryeman/matrix)
+Image [latest release](https://hub.docker.com/r/joerdonfryeman/matrix).
+
+Pull the image:
+
+```console
+docker pull joerdonfryeman/matrix:1.1.0
+```
 
 Run the image attached to the standard input/output streams:
 

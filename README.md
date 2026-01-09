@@ -16,12 +16,6 @@ In Windows, run ```Matrix_v1.0.9.exe```
 
 Image [latest release](https://hub.docker.com/r/joerdonfryeman/matrix).
 
-Pull the image:
-
-```console
-docker pull joerdonfryeman/matrix:1.1.0
-```
-
 Run the image attached to the standard input/output streams:
 
 ```console
@@ -51,7 +45,7 @@ docker run --rm -it joerdonfryeman/matrix:1.1.0
 
 ## Installation
 
-Download the project
+Download the project:
 
 ``` console
 git clone https://github.com/JoerdonFryeman/Matrix
@@ -60,21 +54,21 @@ cd Matrix
 
 ### For Linux
 
-Just run the script
+Just run the script:
 ``` console
 python3 main.py
 ```
 
 ### For Windows
 
-Create and activate a virtual environment
+Create and activate a virtual environment:
 
 ``` console
 python -m venv venv
 venv\Scripts\activate
 ```
 
-Install the requirements and run the script
+Install the requirements and run the script:
 
 ``` console
 python.exe -m pip install --upgrade pip
@@ -84,14 +78,14 @@ python main.py
 
 ## Startup
 
-You can start the project in your console
+You can start the project in your console:
 ``` console
 python3 main.py
 ```
 
 ## Stop
 
-Just press Enter or try any other key
+Just press Enter or try any other key.
 
 ## Settings
 

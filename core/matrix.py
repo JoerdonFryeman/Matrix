@@ -139,7 +139,7 @@ class Matrix(Base):
         except error:
             pass
 
-    def _safe_wrapper_move(self, init_h: int):
+    def _safe_wrapper_move(self, init_h: int) -> None:
         """
         Run move_droplet_of_symbols under curses.wrapper and ignore curses errors.
         :param init_h: initial height to pass to move_droplet_of_symbols.

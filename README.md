@@ -54,9 +54,9 @@ cd Matrix
 
 ### For Linux
 
-Just run the script:
+Just run the script in your console:
 ``` console
-python3 main.py
+python core/main.py
 ```
 
 ### For Windows
@@ -68,19 +68,12 @@ python -m venv venv
 venv\Scripts\activate
 ```
 
-Install the requirements and run the script:
+Install the requirements and run the script in your console:
 
 ``` console
 python.exe -m pip install --upgrade pip
 pip install -r requirements_for_windows.txt
-python main.py
-```
-
-## Startup
-
-You can start the project in your console:
-``` console
-python3 main.py
+python core\main.py
 ```
 
 ## Stop

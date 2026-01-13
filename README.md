@@ -6,6 +6,7 @@ Your personal green rain of code in a Linux or Windows console!
 
 ## Startup
 Download [latest release](https://github.com/JoerdonFryeman/Matrix/releases/tag/Matrix_v1.0.9).
+
 In Linux, run ```Matrix_v1.0.9.app``` in the terminal or with the command:
 ```console
 cd /home/your_directories.../Matrix_v1.0.9/Linux/ && ./Matrix_v1.0.9.app

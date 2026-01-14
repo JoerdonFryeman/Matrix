@@ -2,8 +2,8 @@ from time import sleep
 from random import randint, choice
 from threading import Thread, Lock
 
-from base import Base
-from configuration import wrapper, error, curs_set, baudrate
+from .base import Base
+from .configuration import wrapper, error, curs_set, baudrate
 
 
 class Matrix(Base):

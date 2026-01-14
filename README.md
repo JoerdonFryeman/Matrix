@@ -57,7 +57,7 @@ cd Matrix
 
 Just run the script in your console:
 ``` console
-python core/main.py
+python main.py
 ```
 
 ### For Windows
@@ -74,7 +74,7 @@ Install the requirements and run the script in your console:
 ``` console
 python.exe -m pip install --upgrade pip
 pip install -r requirements_for_windows.txt
-python core\main.py
+python main.py
 ```
 
 ## Stop

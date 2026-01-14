@@ -1,8 +1,8 @@
 from time import sleep
 from random import randint
 
-from base import Base
-from configuration import wrapper
+from .base import Base
+from .configuration import wrapper
 
 
 class Neo(Base):

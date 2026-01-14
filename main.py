@@ -1,5 +1,5 @@
-from neo import Neo
-from matrix import Matrix
+from core.neo import Neo
+from core.matrix import Matrix
 
 neo = Neo()
 matrix = Matrix()

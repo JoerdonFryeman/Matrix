@@ -36,6 +36,26 @@ class Matrix(Base):
         )
         return choice(generated_symbol)
 
+    @staticmethod
+    def safe_wrapper(function, func_arg, arg: bool) -> None:
+        """Run the method under curses.wrapper and ignore curses errors."""
+        try:
+            if arg:
+                wrapper(function, func_arg)
+            else:
+                wrapper(function)
+        except error:
+            pass
+        except Exception as e:
+            print(f'The check returned an error: {e}\nPress Enter to finish.')
+
+    def wait_for_enter(self, stdscr) -> None:
+        """Block on a curses window until a key is pressed, then stop the animation."""
+        stdscr.nodelay(False)
+        stdscr.getch()
+        self.running: bool = False
+        stdscr.clear()
+
     def draw_symbol(self, stdscr, current_height: int, init_width: int, switch: int, *args: bool) -> object:
         """
         The method draws a random symbol on the screen at specified position.
@@ -125,32 +145,8 @@ class Matrix(Base):
                 init_width = choice([i for i in range(1, width - 1, 2)])
                 init_speed = float(f'{0.}{randint(self.min_speed, self.max_speed)}')
 
-    def _wait_for_enter(self, stdscr) -> None:
-        """Block on a curses window until a key is pressed, then stop the animation."""
-        stdscr.nodelay(False)
-        stdscr.getch()
-        self.running: bool = False
-        stdscr.clear()
-
-    def _safe_wrapper_wait(self):
-        """Run _wait_for_enter under curses.wrapper and ignore curses errors."""
-        try:
-            wrapper(self._wait_for_enter)
-        except error:
-            pass
-
-    def _safe_wrapper_move(self, init_h: int) -> None:
-        """
-        Run move_droplet_of_symbols under curses.wrapper and ignore curses errors.
-        :param init_h: initial height to pass to move_droplet_of_symbols.
-        """
-        try:
-            wrapper(self.move_droplet_of_symbols, init_h)
-        except error:
-            pass
-
     def make_threads_of_droplets(self) -> None:
         """The method makes threads of droplets."""
-        Thread(target=self._safe_wrapper_wait).start()
+        Thread(target=self.safe_wrapper, args=(self.wait_for_enter, None, False)).start()
         for _ in range(self.threads_rate):
-            Thread(target=self._safe_wrapper_move, args=(self.init_height,)).start()
+            Thread(target=self.safe_wrapper, args=(self.move_droplet_of_symbols, self.init_height, True)).start()

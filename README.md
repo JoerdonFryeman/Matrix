@@ -17,13 +17,13 @@ In Windows, run ```Matrix_v1.0.9.exe```
 
 Image [latest release](https://hub.docker.com/r/joerdonfryeman/matrix).
 
-Run the image attached to the standard input/output streams:
+Run with attached standard streams (interactive terminal):
 
 ```console
 docker run -it joerdonfryeman/matrix:1.1.0
 ```
 
-Alternative (clarifies intent; second command corrected):
+Same with automatic container removal after exit:
 
 ```console
 docker run --rm -it joerdonfryeman/matrix:1.1.0

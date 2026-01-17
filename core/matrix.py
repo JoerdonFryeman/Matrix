@@ -32,7 +32,7 @@ class Matrix(Base):
             *(i for i in ('π', 'λ', 'β', 'γ', 'Ω', 'θ', 'Σ', 'Ψ', 'ξ', 'ω') if args[3]),
             *(i for i in ('X', 'Y', 'Z', 'x', 'y', 'z', 'r', 'd', 'f', 'l') if args[4]),
             *(i for i in ('Ё', 'ё', 'Э', 'э', 'Ф', 'ф', 'Ъ', 'ъ', 'Я', 'я') if args[5]),
-            *(i for i in ('小', '凡', '体', '人', '里', '是', '永', '甲', '字', '书') if args[6])
+            *(i for i in ('小', '女', '体', '里', '字', '书', '永', '甲', '人', '是') if args[6])
         )
         return choice(generated_symbol)
 

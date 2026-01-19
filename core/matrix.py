@@ -51,10 +51,9 @@ class Matrix(Base):
 
     def wait_for_enter(self, stdscr) -> None:
         """Block on a curses window until a key is pressed, then stop the animation."""
-        stdscr.nodelay(False)
         stdscr.getch()
         self.running: bool = False
-        stdscr.clear()
+        sleep(0.5)
 
     def draw_symbol(self, stdscr, current_height: int, init_width: int, switch: int, *args: bool) -> object:
         """

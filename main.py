@@ -1,24 +1,42 @@
-from core.neo import Neo
-from core.matrix import Matrix
+import signal
+from time import sleep
 
-neo = Neo()
-matrix = Matrix()
+from core.run import RunProgram
+
+run = RunProgram()
 
 
-def main() -> None:
-    """Entry point function."""
+def main(name: str, version: str, year: int) -> None:
+    """Запускающая все процессы главная функция."""
+
+    def get_handler(signum, _frame) -> None:
+        run.running = False
+        run.logger.info('Задействован обработчик сигналов для корректного завершения: %s', signum)
+
+    handler_tuple: tuple[str, str, str] = ('SIGHUP', 'SIGINT', 'SIGTERM')
+    for n in handler_tuple:
+        if hasattr(signal, n):
+            signal.signal(getattr(signal, n), get_handler)
+
     try:
-        if neo.neo_enable:
-            neo.get_neo_wrapper()
-        if matrix.matrix_enable:
-            matrix.make_threads_of_droplets()
-        if not neo.neo_enable and not matrix.matrix_enable:
-            print('\nNeo and matrix modules are disabled, what else do you want to see here?\n')
-    except AttributeError:
-        print('\nAttributeError! You need to restart the program!\n')
-    except Exception as error:
-        print(f'The check came back with an error: {error}')
+        run.create_directories()
+        run.get_logging_data()
+        run.log_app_release(name=name, version=version, year=year)
+        run.logger.info('Приложение запущено.')
+        run.create_wrapped_threads()
+        while getattr(run, 'running', True):
+            sleep(0.1)
+        run.logger.info('Приложение остановлено.')
+    except Exception as e:
+        run.logger.error(f'Проверка выдала ошибку: {e}\nЕсли не был выполнен выход в терминал, нажми Enter.')
+        try:
+            run.running = False
+            run.logger.info('Приложение остановлено.')
+        except Exception:
+            run.logger.exception(
+                'Не удалось корректно остановить приложение!\nЕсли не был выполнен выход в терминал, нажми Enter.'
+            )
 
 
 if __name__ == '__main__':
-    main()
+    main('Matrix', '1.1.0', 2026)

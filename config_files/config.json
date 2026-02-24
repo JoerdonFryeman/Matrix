@@ -1,6 +1,7 @@
 {
+    "language": "ru",
     "neo": {
-        "enable": true,
+        "enable": false,
         "neo_color": "GREEN",
         "sentence_first": "Wake up, Neo...",
         "sentence_second": "The Matrix has you...",
@@ -10,11 +11,10 @@
     "matrix": {
         "enable": true,
         "matrix_color": "GREEN",
-        "threads_rate": 35,
-        "bold_symbols_rate": 8,
+        "threads_rate": 25,
+        "bold_symbols_rate": 0.007,
         "min_speed": 2,
-        "max_speed": 6,
-        "void_rate": 2,
+        "max_speed": 8,
         "digits": true,
         "symbols": true,
         "currencies": true,
@@ -22,9 +22,5 @@
         "latin": true,
         "cyrillic": true,
         "chinese": true
-    },
-    "info": {
-        "enable": false,
-        "info_color": "MAGENTA"
     }
 }

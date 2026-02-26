@@ -14,7 +14,7 @@
         "threads_rate": 25,
         "bold_symbols_rate": 0.007,
         "min_speed": 2,
-        "max_speed": 8,
+        "max_speed": 7,
         "digits": true,
         "symbols": true,
         "currencies": true,

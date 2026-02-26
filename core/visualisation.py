@@ -1,5 +1,3 @@
-from datetime import datetime
-
 try:
     from curses import (
         wrapper, error, curs_set, baudrate, start_color, init_pair, use_default_colors, has_colors, color_pair,
@@ -23,23 +21,6 @@ class Visualisation(Base):
                 wrapper(function)
         except error:
             pass
-
-    @staticmethod
-    def format_date() -> str:
-        """Возвращает текущую дату в формате 'DD.MM.YYYY'."""
-        now = datetime.now()
-        return now.strftime("%d.%m.%Y")
-
-    @staticmethod
-    def display_symbols(
-            stdscr, height: int, y: int, x: int, symbol: str | bool | list[str] | dict[str, str | bool], color: object
-    ) -> None:
-        """Метод отображает символы на экране."""
-        for i in range(height):
-            try:
-                stdscr.addstr(i + y, x, symbol[i], color)
-            except error:
-                pass
 
     @staticmethod
     def verify_color(color) -> object | int:
@@ -75,7 +56,3 @@ class Visualisation(Base):
         if a_bold:
             return color_pair(colors_dict[color]) | A_BOLD
         return color_pair(colors_dict[color])
-
-    def get_info_list(self, function) -> list[str]:
-        """Метод получает список строковой информации на основе переданной функции."""
-        return [f"{key}{value}" for key, value in function(self.language).items()]

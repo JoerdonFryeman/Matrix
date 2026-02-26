@@ -1,5 +1,4 @@
 import os
-import platform
 from logging import config, getLogger
 from json import load, dump, JSONDecodeError
 
@@ -23,7 +22,7 @@ class Base:
             },
             "matrix": {
                 "enable": True, "matrix_color": "GREEN", "threads_rate": 25, "bold_symbols_rate": 0.007,
-                "min_speed": 2, "max_speed": 8, "digits": True, "symbols": True, "currencies": True,
+                "min_speed": 2, "max_speed": 7, "digits": True, "symbols": True, "currencies": True,
                 "greek": True, "latin": True, "cyrillic": True, "chinese": True
             }
         }
@@ -70,18 +69,6 @@ class Base:
         if language not in ['ru', 'en']:
             language: str = 'ru'
         return language
-
-    @staticmethod
-    def verify_os() -> str | None:
-        """Метод проверяет на какой ОС запускается программа."""
-        system: str = platform.system()
-        if system == 'Linux':
-            return 'Linux'
-        if system == 'Darwin':
-            return 'macOS'
-        if system == 'Windows':
-            return 'Windows'
-        return None
 
     @staticmethod
     def get_json_data(directory: str, name: str) -> dict:

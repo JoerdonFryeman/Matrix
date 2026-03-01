@@ -1,13 +1,13 @@
 from time import sleep
 from curses import error
 from threading import Thread, Lock
-from random import randint, choice
+from random import random, randint
 
 from .neo import Neo
-from .matrix import Matrix
+from .visualisation import Visualisation
 
 
-class Additionally(Neo, Matrix):
+class Additionally(Neo, Visualisation):
     message = {
         "ru": "\nМодули часов и информации деактивированы, что ещё ты хочешь здесь увидеть?",
         "en": "\nClock and info modules are disabled, what else do you want to see here?"
@@ -61,34 +61,36 @@ class RunProgram(Additionally):
 
     def create_main_loop(self, stdscr, current_height, init_width) -> None:
         """Запускает все модули программы в цикле."""
-        self.validate_speed_bounds()
+        counter = 0
         switch = randint(0, 1)
         init_speed = randint(self.min_speed, self.max_speed) / 100.0
         while self.running:
             height, width = stdscr.getmaxyx()
-            self.renew()
             try:
                 with self.locker:
+                    if counter % 5 == 0:
+                        self.renew()
                     if current_height == randint(height // 3, height):
                         raise error
                     stdscr.addstr(current_height, init_width, '  ')
                     if switch == 0:
                         stdscr.addch(current_height, init_width, ' ')
                     else:
+                        bold = random() < max(0.02, min(0.9, self.bold_symbols_rate / init_speed))
                         stdscr.addch(
                             current_height, init_width, self.generate_symbol(
-                                self.digits, self.symbols, self.currencies,
-                                self.greek, self.latin, self.cyrillic, self.chinese
-                            ),
-                            self.paint(self.matrix_color, self.calculate_bold_probability(init_speed))
+                                self.digits, self.symbols, self.currencies, self.greek,
+                                self.latin, self.cyrillic, self.chinese
+                            ), self.paint(self.matrix_color, bold)
                         )
                     stdscr.refresh()
                     current_height += 1
                 sleep(init_speed)
             except error:
+                init_width = 1 + 2 * randint(0, max(0, (width - 3) // 2))
                 current_height = self.init_height
-                init_width = choice([i for i in range(1, width - 1, 2)])
                 init_speed = randint(self.min_speed, self.max_speed) / 100.0
+            counter = (counter + 1) % 100
 
     def create_wrapped_threads(self) -> None:
         """Запускает потоки для выполнения модулей в зависимости от наличия системной информации."""

@@ -35,7 +35,7 @@ class Neo(Visualisation):
 
     def wake_up_neo(self, stdscr) -> None:
         """Принимает список слов и возвращает его в виде напечатанного ввода.."""
-        symbol_color = self.paint(self.neo_color, False)
+        symbol_color = self.paint(None, self.neo_color, False)
         counter_first = 0
         self.get_split_sentence(stdscr, counter_first, symbol_color)
         stdscr.clear()

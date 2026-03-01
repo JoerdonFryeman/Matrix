@@ -7,8 +7,8 @@ class Base:
     __slots__ = (
         'logger', 'config', 'variables', 'language', 'neo', 'neo_enable', 'neo_color', 'sentence_first',
         'sentence_second', 'sentence_third', 'sentence_fourth', 'matrix', 'matrix_enable', 'matrix_color',
-        'threads_rate', 'bold_symbols_rate', 'min_speed', 'max_speed', 'digits', 'symbols',
-        'currencies', 'greek', 'latin', 'cyrillic', 'chinese'
+        'rainbow_mode', 'lego_mode', 'threads_rate', 'bold_symbols_rate', 'min_speed', 'max_speed', 'digits',
+        'symbols', 'currencies', 'greek', 'latin', 'cyrillic', 'chinese'
     )
 
     def __init__(self):
@@ -21,9 +21,9 @@ class Base:
                 "sentence_fourth": "Knock, knock, Neo."
             },
             "matrix": {
-                "enable": True, "matrix_color": "GREEN", "threads_rate": 25, "bold_symbols_rate": 0.007,
-                "min_speed": 2, "max_speed": 7, "digits": True, "symbols": True, "currencies": True,
-                "greek": True, "latin": True, "cyrillic": True, "chinese": True
+                "enable": True, "matrix_color": "GREEN", "rainbow_mode": False, "lego_mode": False, "threads_rate": 25,
+                "bold_symbols_rate": 0.007, "min_speed": 2, "max_speed": 7, "digits": True, "symbols": True,
+                "currencies": True, "greek": True, "latin": True, "cyrillic": True, "chinese": True
             }
         }
         self.variables = self.get_config_data('config')
@@ -39,6 +39,8 @@ class Base:
             self.matrix = self.variables['matrix']
             self.matrix_enable = self.matrix['enable']
             self.matrix_color = self.matrix['matrix_color']
+            self.rainbow_mode = self.matrix['rainbow_mode']
+            self.lego_mode = self.matrix['lego_mode']
             self.threads_rate = self.matrix['threads_rate']
             self.bold_symbols_rate = self.matrix['bold_symbols_rate']
             self.min_speed = self.matrix['min_speed']

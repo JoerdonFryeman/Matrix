@@ -31,6 +31,8 @@ class Additionally(Neo, Visualisation):
         self.matrix = self.variables['matrix']
         self.matrix_enable = self.matrix['enable']
         self.matrix_color = self.matrix['matrix_color']
+        self.rainbow_mode = self.matrix['rainbow_mode']
+        self.lego_mode = self.matrix['lego_mode']
         self.threads_rate = self.matrix['threads_rate']
         self.bold_symbols_rate = self.matrix['bold_symbols_rate']
         self.min_speed = self.matrix['min_speed']
@@ -62,7 +64,7 @@ class RunProgram(Additionally):
     def create_main_loop(self, stdscr, current_height, init_width) -> None:
         """Запускает все модули программы в цикле."""
         counter = 0
-        switch = randint(0, 1)
+        switch, rainbow = randint(0, 1), randint(1, 8)
         init_speed = randint(self.min_speed, self.max_speed) / 100.0
         while self.running:
             height, width = stdscr.getmaxyx()
@@ -81,7 +83,7 @@ class RunProgram(Additionally):
                             current_height, init_width, self.generate_symbol(
                                 self.digits, self.symbols, self.currencies, self.greek,
                                 self.latin, self.cyrillic, self.chinese
-                            ), self.paint(self.matrix_color, bold)
+                            ), self.paint(rainbow, self.matrix_color, bold)
                         )
                     stdscr.refresh()
                     current_height += 1

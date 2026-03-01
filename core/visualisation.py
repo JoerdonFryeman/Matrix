@@ -1,4 +1,4 @@
-from random import choice
+from random import randint, choice
 
 try:
     from curses import (
@@ -65,7 +65,7 @@ class Visualisation(Base):
             pools = ['0', '1']
         return choice(pools)
 
-    def paint(self, color: str, a_bold: bool) -> int:
+    def paint(self, rainbow: int, color: str, a_bold: bool) -> int:
         colors = ('MAGENTA', 'BLUE', 'CYAN', 'GREEN', 'YELLOW', 'RED', 'WHITE', 'BLACK')
         for i in range(1, len(colors) + 1):
             init_pair(i, self.verify_color(colors[i - 1]), -1)
@@ -75,7 +75,12 @@ class Visualisation(Base):
             error_message = f'Цвет "{color}" не найден в доступных цветах.'
             self.logger.error('%s (доступные: %s)', error_message, ', '.join(colors))
             raise KeyError(error_message)
-        attribute = color_pair(pair_index)
+        if self.rainbow_mode:
+            attribute = color_pair(rainbow)
+        elif self.lego_mode:
+            attribute = color_pair(randint(1, 8))
+        else:
+            attribute = color_pair(pair_index)
         if a_bold:
             attribute |= A_BOLD
         return attribute

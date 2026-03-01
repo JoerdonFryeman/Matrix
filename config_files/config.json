@@ -11,6 +11,8 @@
     "matrix": {
         "enable": true,
         "matrix_color": "GREEN",
+        "rainbow_mode": false,
+        "lego_mode": false,
         "threads_rate": 25,
         "bold_symbols_rate": 0.007,
         "min_speed": 2,

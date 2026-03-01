@@ -7,11 +7,11 @@ Your personal green rain of code in a Linux or Windows console!
 ## Startup
 Download [latest release](https://github.com/JoerdonFryeman/Matrix/releases/tag/Matrix_v1.1.0).
 
-In Linux, run ```Matrix_v1.1.0.app``` in the terminal or with the command:
+In Linux, run ```Matrix_v1.1``` in the terminal with the command:
 ```console
-cd /home/your_directories.../Matrix_v1.1.0/Linux/ && ./Matrix_v1.1.0.app
+cd /home/your_directories.../Matrix_v1.1.0/Linux/ && ./Matrix_v1.1
 ```
-In Windows, run ```Matrix_v1.1.0.exe```
+In Windows, run ```Matrix_v1.1.exe```
 
 ## Docker
 

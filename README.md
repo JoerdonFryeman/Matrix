@@ -82,7 +82,7 @@ Some program settings can be specified in the config.json file.
 - Enable or disable matrix or neo modules.
 - Write your own sentences for example: "Fall asleep, Neo...".
 - You can also choose the rate of threads, bold symbols and speed of rain.
-- With true or false you may enable and disable some kinds of symbols.
+- With true or false you can enable or disable some kinds of symbols and the rainbow or lego color mode.
 
 The default settings can be restored by deleting the config.json file and restarting the program.
 

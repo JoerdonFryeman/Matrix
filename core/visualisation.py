@@ -65,7 +65,7 @@ class Visualisation(Base):
             pools = ['0', '1']
         return choice(pools)
 
-    def paint(self, rainbow: int, color: str, a_bold: bool) -> int:
+    def paint(self, rainbow: int | None, color: str, a_bold: bool) -> int:
         colors = ('MAGENTA', 'BLUE', 'CYAN', 'GREEN', 'YELLOW', 'RED', 'WHITE', 'BLACK')
         for i in range(1, len(colors) + 1):
             init_pair(i, self.verify_color(colors[i - 1]), -1)

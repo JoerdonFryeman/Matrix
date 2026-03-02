@@ -9,8 +9,8 @@ from .visualisation import Visualisation
 
 class Additionally(Neo, Visualisation):
     message = {
-        "ru": "\nМодули часов и информации деактивированы, что ещё ты хочешь здесь увидеть?",
-        "en": "\nClock and info modules are disabled, what else do you want to see here?"
+        "ru": "\nМодули Neo и Matrix отключены, что ещё ты хочешь здесь увидеть?",
+        "en": "\nNeo and Matrix modules are disabled, what else do you want to see here?"
     }
 
     class NoThreadsError(Exception):
